@@ -1,32 +1,28 @@
 #! /usr/bin/fish
 
+if test -z $BORG_REPO
+    logger -t home.rec.fish "BORG_REPO empty. Cannot proceed"
+    echo "home.rec.fish -- BORG_REPO empty. Cannot proceed"
+    exit
+end
+
 set dst /home/francois
-set src /l/backup/raktar/home
+set arch (borg list --last 1 --prefix home. $BORG_REPO | cut -d' ' -f1)
 
-set arch (command ls -1d $src/home.* | head -n1)
-# if archive does not exist, exit
-if test ! -f "$arch"
-    logger -t home.rec.fish "Archive not found"
-    echo "home.rec.fish -- Archive not found"
-    exit
-end
-
-# if target destination does not exist, create it
-if test ! -d "$dst"
-    logger -t home.rec.fish "Creating non existent destination"
+if test ! -d $dst
     echo "home.rec.fish -- Creating non existent destination"
-    mkdir -p "$dst"
-    if test $status -ne 0
-        echo "home.rec.fish -- Cannot create missing destination. Exiting..."
-        exit
-    end
+    mkdir -p $dst
 end
 
-tar -xvzf "$arch" -C "$dst"
-if test $status -ne 0
-    logger -t home.rec.fish "Recovery unsuccessful"
-    echo "home.rec.fish -- Recovery unsuccessful"
+pushd $dst
+borg extract --list $BORG_REPO::$arch
+set borg_result $status
+popd
+
+if test "$borg_result" -ne 0
+    logger -t home.rec.fish "Could not recover borg backup"
+    echo "home.rec.fish -- Could not recover borg backup"
     exit
 end
-logger -t home.rec.fish "The recovery was successful"
-echo "home.rec.fish -- The recovery was successful"
+logger -t home.rec.fish "Borg backup recovery successful"
+echo "home.rec.fish -- Borg backup recovery successful"
