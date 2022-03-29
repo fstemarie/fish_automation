@@ -13,7 +13,6 @@ end
 
 # if target destination does not exist, create it
 if test ! -d "$dst"
-    logger -t qbittorrent.rec.fish "Creating non existent destination"
     echo "qbittorrent.rec.fish -- Creating non existent destination"
     mkdir -p "$dst"
     if test $status -ne 0
@@ -24,10 +23,10 @@ if test ! -d "$dst"
 end
 
 tar -xvzf "$arch" -C "$dst"
-if test $status -eq 0
-    logger -t qbittorrent.rec.fish "The recovery was successful"
-    echo "qbittorrent.rec.fish -- The recovery was successful"
-else
+if test $status -ne 0
     logger -t qbittorrent.rec.fish "Recovery unsuccessful"
     echo "qbittorrent.rec.fish -- Recovery unsuccessful"
+    exit
 end
+logger -t qbittorrent.rec.fish "The recovery was successful"
+echo "qbittorrent.rec.fish -- The recovery was successful"

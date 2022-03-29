@@ -17,17 +17,16 @@ if test ! -d "$dst"
     echo "home.rec.fish -- Creating non existent destination"
     mkdir -p "$dst"
     if test $status -ne 0
-        logger -t home.rec.fish "Cannot create missing destination. Exiting..."
         echo "home.rec.fish -- Cannot create missing destination. Exiting..."
         exit
     end
 end
 
 tar -xvzf "$arch" -C "$dst"
-if test $status -eq 0
-    logger -t home.rec.fish "The recovery was successful"
-    echo "home.rec.fish -- The recovery was successful"
-else
+if test $status -ne 0
     logger -t home.rec.fish "Recovery unsuccessful"
     echo "home.rec.fish -- Recovery unsuccessful"
+    exit
 end
+logger -t home.rec.fish "The recovery was successful"
+echo "home.rec.fish -- The recovery was successful"

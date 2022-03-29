@@ -13,7 +13,6 @@ end
 
 # if target destination does not exist, create it
 if test ! -d "$dst"
-    logger -t jackett.rec.fish "Creating non existent destination"
     echo "jackett.rec.fish -- Creating non existent destination"
     mkdir -p "$dst"
     if test $status -ne 0
@@ -24,10 +23,10 @@ if test ! -d "$dst"
 end
 
 tar -xvzf "$arch" -C "$dst"
-if test $status -eq 0
-    logger -t jackett.rec.fish "The recovery was successful"
-    echo "jackett.rec.fish -- The recovery was successful"
-else
+if test $status -ne 0
     logger -t jackett.rec.fish "Recovery unsuccessful"
     echo "jackett.rec.fish -- Recovery unsuccessful"
+    exit
 end
+logger -t jackett.rec.fish "The recovery was successful"
+echo "jackett.rec.fish -- The recovery was successful"
