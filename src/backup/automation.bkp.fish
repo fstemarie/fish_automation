@@ -21,8 +21,8 @@ end
 echo "automation.bkp.fish -- Creating archive"
 tar -cvzf $arch -C $src/.. automation
 if test $status -eq 0
-    logger -t automation.rec.fish "The recovery was successful"
-    echo "automation.rec.fish -- The recovery was successful"
+    logger -t automation.rec.fish "The backup was successful"
+    echo "automation.rec.fish -- The backup was successful"
 
     set nb_backups (command ls -1trd $dst/automation.*.tgz | wc -l)
     set nb_backups_todelete (math $nb_backups - $nb_max_backups)
@@ -33,6 +33,6 @@ if test $status -eq 0
             | xargs rm -f
     end
 else
-    logger -t automation.rec.fish "Recovery unsuccessful"
-    echo "automation.rec.fish -- Recovery unsuccessful"
+    logger -t automation.rec.fish "Backup unsuccessful"
+    echo "automation.rec.fish -- Backup unsuccessful"
 end

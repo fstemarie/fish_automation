@@ -21,8 +21,9 @@ end
 echo "development.bkp.fish -- Creating archive"
 tar -cvzf $arch -C $src/.. development
 if test $status -eq 0
-    logger -t development.rec.fish "The recovery was successful"
-    echo "development.rec.fish -- The recovery was successful"
+    logger -t development.rec.fish "The backup was successful"
+    echo "development.rec.fish -- The backup was successful"
+
     set nb_backups (command ls -1trd $dst/development.*.tgz | wc -l)
     set nb_backups_todelete (math $nb_backups - $nb_max_backups)
     if test $nb_backups_todelete -gt 0
@@ -32,6 +33,6 @@ if test $status -eq 0
             | xargs rm -f
     end
 else
-    logger -t development.rec.fish "Recovery unsuccessful"
-    echo "development.rec.fish -- Recovery unsuccessful"
+    logger -t development.rec.fish "Backup unsuccessful"
+    echo "development.rec.fish -- Backup unsuccessful"
 end

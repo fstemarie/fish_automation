@@ -21,8 +21,9 @@ end
 echo "config.bkp.fish -- Creating archive"
 tar -cvzf $arch -C $src/.. config
 if test $status -eq 0
-    logger -t config.rec.fish "The recovery was successful"
-    echo "config.rec.fish -- The recovery was successful"
+    logger -t config.rec.fish "The backup was successful"
+    echo "config.rec.fish -- The backup was successful"
+
     set nb_backups (command ls -1trd $dst/config.*.tgz | wc -l)
     set nb_backups_todelete (math $nb_backups - $nb_max_backups)
     if test $nb_backups_todelete -gt 0
@@ -32,6 +33,6 @@ if test $status -eq 0
             | xargs rm -f
     end
 else
-    logger -t config.rec.fish "Recovery unsuccessful"
-    echo "config.rec.fish -- Recovery unsuccessful"
+    logger -t config.rec.fish "Backup unsuccessful"
+    echo "config.rec.fish -- Backup unsuccessful"
 end
