@@ -14,7 +14,7 @@ if test ! -d "$dst"
 end
 
 echo "$s -- Copying duckdns script to destination"
-cp --remove-destination "./src/duckdns/duckdns.fish" "$dst"
+cp --remove-destination ./src/duckdns/duckdns.fish $dst
 if test $status -ne 0
     echo "$s -- Error whlie copying script"
     exit

@@ -14,7 +14,7 @@ if test ! -d "$dst"
 end
 
 echo "$s -- Copying backup scripts to destination"
-cp --remove-destination "./src/backup/*.fish" "$dst"
+cp --remove-destination ./src/backup/* $dst
 if test $status -ne 0
     echo "$s -- Error whlie copying backup scripts"
     exit
