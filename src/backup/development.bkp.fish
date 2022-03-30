@@ -19,11 +19,12 @@ if test $status -ne 0
     echo "development.bkp.fish -- There was an error while creating the Borg archive"
     exit
 end
+logger -t development.bkp.fish "Borg archive created successfully"
 echo "development.bkp.fish -- Borg archive created successfully"
 
 echo "development.bkp.fish -- Pruning borg archive"
 borg prune -s --list --save-space --prefix development. \
-    --keep-last 5 --keep-daily 14 --keep-monthly 6 \
+    --keep-daily 14 --keep-monthly 6 \
     $BORG_REPO
 if test $status -ne 0
     logger -t development.bkp.fish "Unable to prune Borg archives"
