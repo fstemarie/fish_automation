@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set nb_max_backups 5
+set nb_max 5
 set src /data/config
 set dst /l/backup/raktar/config
 set arch $dst"/config."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
@@ -20,19 +20,20 @@ end
 
 echo "config.bkp.fish -- Creating archive"
 tar -cvzf $arch -C $src/.. config
-if test $status -eq 0
-    logger -t config.rec.fish "The backup was successful"
-    echo "config.rec.fish -- The backup was successful"
-
-    set nb_backups (command ls -1trd $dst/config.*.tgz | wc -l)
-    set nb_backups_todelete (math $nb_backups - $nb_max_backups)
-    if test $nb_backups_todelete -gt 0
-        echo "config.bkp.fish -- Removing older archives"
-        command ls -1trd $dst/config.*.tgz \
-            | head -n$nb_backups_todelete \
-            | xargs rm -f
-    end
-else
+if test $status -ne 0
     logger -t config.rec.fish "Backup unsuccessful"
     echo "config.rec.fish -- Backup unsuccessful"
+    exit
+end
+logger -t config.rec.fish "The backup was successful"
+echo "config.rec.fish -- The backup was successful"
+
+alias backups="command ls -1trd $dst/config.*.tgz"
+set nb_tot (backups | count)
+set nb_diff (math $nb_tot - $nb_max)
+if test $nb_diff -gt 0
+    echo \n------------------------------------------
+    echo "config.bkp.fish -- Removing older archives"
+    backups | head -n$nb_diff
+    backups | head -n$nb_diff | xargs rm -f
 end

@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set nb_max_backups 5
+set nb_max 5
 set src /data/containers/jackett
 set dst /l/backup/raktar/containers/jackett
 set arch $dst"/jackett."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
@@ -20,19 +20,20 @@ end
 
 echo "jackett.bkp.fish -- Creating archive"
 tar -cvzf $arch -C $src/.. jackett
-if test $status -eq 0
-    logger -t jackett.rec.fish "The backup was successful"
-    echo "jackett.rec.fish -- The backup was successful"
-
-    set nb_backups (command ls -1trd $dst/jackett.*.tgz | wc -l)
-    set nb_backups_todelete (math $nb_backups - $nb_max_backups)
-    if test $nb_backups_todelete -gt 0
-        echo "jackett.bkp.fish -- Removing older archives"
-        command ls -1trd $dst/jackett.*.tgz \
-            | head -n$nb_backups_todelete \
-            | xargs rm -f
-    end
-else
+if test $status -ne 0
     logger -t jackett.rec.fish "Backup unsuccessful"
     echo "jackett.rec.fish -- Backup unsuccessful"
+    exit
+end
+logger -t jackett.rec.fish "The backup was successful"
+echo "jackett.rec.fish -- The backup was successful"
+
+alias backups="command ls -1trd $dst/jackett.*.tgz"
+set nb_tot (backups | count)
+set nb_diff (math $nb_tot - $nb_max)
+if test $nb_diff -gt 0
+    echo \n-------------------------------------------
+    echo "jackett.bkp.fish -- Removing older archives"
+    backups | head -n$nb_diff
+    backups | head -n$nb_diff | xargs rm -f
 end

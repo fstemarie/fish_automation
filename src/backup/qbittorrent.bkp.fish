@@ -1,9 +1,10 @@
 #! /usr/bin/fish
 
-set nb_max_backups 5
+set nb_max 5
 set src /data/containers/qbittorrent
 set dst /l/backup/raktar/containers/qbittorrent
 set arch $dst"/qbittorrent."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
+
 
 # if the source folder doesn't exist, then there is nothing to backup
 if test ! -d $src
@@ -19,20 +20,24 @@ if test ! -d $dst
 end
 
 echo "qbittorrent.bkp.fish -- Creating archive"
-tar -cvzf $arch -C $src/.. qbittorrent
-if test $status -eq 0
-    logger -t qbittorrent.rec.fish "The backup was successful"
-    echo "qbittorrent.rec.fish -- The backup was successful"
+tar --create --verbose --gzip --file $arch --directory $src/.. \
+    --exclude={"logs", ".cache", "BT_backup", "ipc-socket"} \
+    qbittorrent
 
-    set nb_backups (command ls -1trd $dst/qbittorrent.*.tgz | wc -l)
-    set nb_backups_todelete (math $nb_backups - $nb_max_backups)
-    if test $nb_backups_todelete -gt 0
-        echo "qbittorrent.bkp.fish -- Removing older archives"
-        command ls -1trd $dst/qbittorrent.*.tgz \
-            | head -n$nb_backups_todelete \
-            | xargs rm -f
-    end
-else
+if test $status -ne 0
     logger -t qbittorrent.rec.fish "Backup unsuccessful"
     echo "qbittorrent.rec.fish -- Backup unsuccessful"
+    exit
+end
+logger -t qbittorrent.rec.fish "The backup was successful"
+echo "qbittorrent.rec.fish -- The backup was successful"
+
+alias backups="command ls -1trd $dst/qbittorrent.*.tgz"
+set nb_tot (backups | count)
+set nb_diff (math $nb_tot - $nb_max)
+if test $nb_diff -gt 0
+    echo \n-----------------------------------------------
+    echo "qbittorrent.bkp.fish -- Removing older archives"
+    backups | head -n$nb_diff
+    backups | head -n$nb_diff | xargs rm -f
 end
