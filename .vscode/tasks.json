@@ -4,10 +4,24 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Deploy backup scripts",
+            "label": "Deploy backup.tar scripts",
             "detail": "Deploy backup scripts",
             "type": "shell",
-            "command": ".vscode/tasks/deploy_backup_scripts.fish",
+            "command": ".vscode/tasks/deploy_backuptar.fish",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+        {
+            "label": "Deploy backup.borg scripts",
+            "detail": "Deploy backup scripts",
+            "type": "shell",
+            "command": ".vscode/tasks/deploy_backup.borg.fish",
             "presentation": {
                 "echo": true,
                 "reveal": "always",
