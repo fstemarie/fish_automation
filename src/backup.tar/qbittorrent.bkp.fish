@@ -25,12 +25,12 @@ tar --create --verbose --gzip --file $arch --directory $src/.. \
     qbittorrent
 
 if test $status -ne 0
-    logger -t qbittorrent.rec.fish "Backup unsuccessful"
-    echo "qbittorrent.rec.fish -- Backup unsuccessful"
+    logger -t qbittorrent.bkp.fish "Backup unsuccessful"
+    echo "qbittorrent.bkp.fish -- Backup unsuccessful"
     exit
 end
-logger -t qbittorrent.rec.fish "The backup was successful"
-echo "qbittorrent.rec.fish -- The backup was successful"
+logger -t qbittorrent.bkp.fish "The backup was successful"
+echo "qbittorrent.bkp.fish -- The backup was successful"
 
 alias backups="command ls -1trd $dst/qbittorrent.*.tgz"
 set nb_tot (backups | count)

@@ -21,12 +21,12 @@ end
 echo "jackett.bkp.fish -- Creating archive"
 tar -cvzf $arch -C $src/.. jackett
 if test $status -ne 0
-    logger -t jackett.rec.fish "Backup unsuccessful"
-    echo "jackett.rec.fish -- Backup unsuccessful"
+    logger -t jackett.bkp.fish "Backup unsuccessful"
+    echo "jackett.bkp.fish -- Backup unsuccessful"
     exit
 end
-logger -t jackett.rec.fish "The backup was successful"
-echo "jackett.rec.fish -- The backup was successful"
+logger -t jackett.bkp.fish "The backup was successful"
+echo "jackett.bkp.fish -- The backup was successful"
 
 alias backups="command ls -1trd $dst/jackett.*.tgz"
 set nb_tot (backups | count)

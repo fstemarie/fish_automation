@@ -21,12 +21,12 @@ end
 echo "config.bkp.fish -- Creating archive"
 tar -cvzf $arch -C $src/.. config
 if test $status -ne 0
-    logger -t config.rec.fish "Backup unsuccessful"
-    echo "config.rec.fish -- Backup unsuccessful"
+    logger -t config.bkp.fish "Backup unsuccessful"
+    echo "config.bkp.fish -- Backup unsuccessful"
     exit
 end
-logger -t config.rec.fish "The backup was successful"
-echo "config.rec.fish -- The backup was successful"
+logger -t config.bkp.fish "The backup was successful"
+echo "config.bkp.fish -- The backup was successful"
 
 alias backups="command ls -1trd $dst/config.*.tgz"
 set nb_tot (backups | count)

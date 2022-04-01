@@ -21,11 +21,12 @@ end
 echo "automation.bkp.fish -- Creating archive"
 tar -cvzf $arch -C $src/.. automation
 if test $status -ne 0
-    logger -t automation.rec.fish "Backup unsuccessful"
-    echo "automation.rec.fish -- Backup unsuccessful"
+    logger -t automation.bkp.fish "Backup unsuccessful"
+    echo "automation.bkp.fish -- Backup unsuccessful"
+    exit
 end
-logger -t automation.rec.fish "The backup was successful"
-echo "automation.rec.fish -- The backup was successful"
+logger -t automation.bkp.fish "The backup was successful"
+echo "automation.bkp.fish -- The backup was successful"
 
 alias backups="command ls -1trd $dst/automation.*.tgz"
 set nb_tot (backups | count)
