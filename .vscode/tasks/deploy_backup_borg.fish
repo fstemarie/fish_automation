@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 # This script will deploy the backup scripts.
 
-set dst /data/automation/backup.borg
+set dst /data/automation/backup_borg
 set s (basename (status current-filename))
 
 if test ! -d "$dst"
@@ -14,7 +14,7 @@ if test ! -d "$dst"
 end
 
 echo "$s -- Copying backup scripts to destination"
-cp --remove-destination ./src/backup.borg/* $dst
+cp --remove-destination ./src/backup_borg/* $dst
 if test $status -ne 0
     echo "$s -- Error while copying backup scripts"
     exit
