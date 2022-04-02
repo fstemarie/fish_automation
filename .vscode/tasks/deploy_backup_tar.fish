@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 # This script will deploy the backup scripts.
 
-set dst /data/automation/backup.tar
+set dst /data/automation/backup_tar
 set s (basename (status current-filename))
 
 if test ! -d "$dst"
@@ -14,7 +14,7 @@ if test ! -d "$dst"
 end
 
 echo "$s -- Copying backup scripts to destination"
-cp --remove-destination ./src/backup.tar/* $dst
+cp --remove-destination ./src/backup_tar/* $dst
 if test $status -ne 0
     echo "$s -- Error whlie copying backup scripts"
     exit
