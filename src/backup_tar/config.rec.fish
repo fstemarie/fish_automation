@@ -8,21 +8,21 @@ set arch (command ls -1d $src/automation.* | head -n1)
 # if archive does not exist, exit
 if test ! -f "$arch"
     logger -t automation.rec.fish "Archive not found"
-    echo "automation.rec.fish -- Archive not found" >$log
+    echo "automation.rec.fish -- Archive not found" >>$log
     exit
 end
 
 # if target destination does not exist, create it
 if test ! -d "$dst"
-    echo "automation.rec.fish -- Creating non existent destination" >$log
-    mkdir -p "$dst" >$log
+    echo "automation.rec.fish -- Creating non existent destination" >>$log
+    mkdir -p "$dst" >>$log
 end
 
-tar -xvzf "$arch" -C "$dst" >$log
+tar -xvzf "$arch" -C "$dst" >>$log
 if test $status -ne 0
     logger -t automation.rec.fish "Recovery unsuccessful"
-    echo "automation.rec.fish -- Recovery unsuccessful" >$log
+    echo "automation.rec.fish -- Recovery unsuccessful" >>$log
     exit
 end
 logger -t automation.rec.fish "The recovery was successful"
-echo "automation.rec.fish -- The recovery was successful" >$log
+echo "automation.rec.fish -- The recovery was successful" >>$log
