@@ -3,7 +3,7 @@
 set nb_max 5
 set src /data/config
 set dst /l/backup/raktar/config
-set log /var/log/automation/config.log
+set log /var/log/automation/config.tar.log
 
 set arch $dst"/config."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 # if the source folder doesn't exist, then there is nothing to backup

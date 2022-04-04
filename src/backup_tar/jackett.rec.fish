@@ -2,27 +2,26 @@
 
 set dst /data/containers/jackett
 set src /l/backup/raktar/containers/jackett
-set log /var/log/automation/jackett.log
 
-set arch (command ls -1d $src/jackett.* | head -n1)
+set arc (command ls -1d $src/jackett.* | head -n1)
 # if archive does not exist, exit
-if test ! -f "$arch"
+if test ! -f "$arc"
     logger -t jackett.rec.fish "Archive not found"
-    echo "jackett.rec.fish -- Archive not found" >>$log
+    echo "jackett.rec.fish -- Archive not found"
     exit
 end
 
 # if target destination does not exist, create it
 if test ! -d "$dst"
-    echo "jackett.rec.fish -- Creating non existent destination" >>$log
-    mkdir -p "$dst" >>$log
+    echo "jackett.rec.fish -- Creating non existent destination"
+    mkdir -p "$dst"
 end
 
-tar -xvzf "$arch" -C "$dst" >>$log
+tar -xvzf "$arc" -C "$dst"
 if test $status -ne 0
     logger -t jackett.rec.fish "Recovery unsuccessful"
-    echo "jackett.rec.fish -- Recovery unsuccessful" >>$log
+    echo "jackett.rec.fish -- Recovery unsuccessful"
     exit
 end
 logger -t jackett.rec.fish "The recovery was successful"
-echo "jackett.rec.fish -- The recovery was successful" >>$log
+echo "jackett.rec.fish -- The recovery was successful"

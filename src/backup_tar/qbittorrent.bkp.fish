@@ -3,9 +3,9 @@
 set nb_max 5
 set src /data/containers/qbittorrent
 set dst /l/backup/raktar/containers/qbittorrent
-set log /var/log/automation/qbittorrent.log
+set log /var/log/automation/qbittorrent.tar.log
 
-set arch $dst"/qbittorrent."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
+set arc $dst"/qbittorrent."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 # if the source folder doesn't exist, then there is nothing to backup
 if test ! -d $src
     logger -t qbittorrent.bkp.fish "Source folder does not exist"
@@ -20,7 +20,7 @@ if test ! -d $dst
 end
 
 echo "qbittorrent.bkp.fish -- Creating archive"
-tar --create --verbose --gzip --file $arch --directory $src/.. \
+tar --create --verbose --gzip --file $arc --directory $src/.. \
     --exclude={"logs", ".cache", "BT_backup", "ipc-socket"} \
     qbittorrent >>$log
 

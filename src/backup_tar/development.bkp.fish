@@ -4,7 +4,7 @@ set dst /l/backup/raktar/development
 set src /home/francois/development
 set dir (dirname $src)
 set base (basename $src)
-set log /var/log/automation/development.log
+set log /var/log/automation/development.tar.log
 
 set arch $dst"/development."(date +%s)".tgz"
 if test ! -f $dst/development.full.tgz
