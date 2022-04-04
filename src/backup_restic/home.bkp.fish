@@ -12,6 +12,7 @@ if test -z $RESTIC_PASSWORD
     exit
 end
 
+set log /var/log/automation/home.restic.log
 set src /home/francois
 # if the source folder doesn't exist, then there is nothing to backup
 if test ! -d $src
@@ -20,7 +21,6 @@ if test ! -d $src
     exit
 end
 echo "home.bkp.fish -- Source folder: $src"
-
 
 echo "home.bkp.fish -- Creating restic snapshot"
 restic backup \
