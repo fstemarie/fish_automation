@@ -1,32 +1,33 @@
 #! /usr/bin/fish
 
+set log /var/log/automation/development.restic.log
+set src /home/francois/development
+
 if test -z $RESTIC_REPOSITORY
     logger -t development.bkp.fish "RESTIC_REPOSITORY empty. Cannot proceed"
-    echo "development.bkp.fish -- RESTIC_REPOSITORY empty. Cannot proceed"
+    echo "development.bkp.fish -- RESTIC_REPOSITORY empty. Cannot proceed" >>$log
     exit
 end
 
 if test -z $RESTIC_PASSWORD
     logger -t development.bkp.fish "RESTIC_PASSWORD empty. Cannot proceed"
-    echo "development.bkp.fish -- RESTIC_PASSWORD empty. Cannot proceed"
+    echo "development.bkp.fish -- RESTIC_PASSWORD empty. Cannot proceed" >>$log
     exit
 end
 
-set log /var/log/automation/development.restic.log
-set src /home/francois/development
 # if the source folder doesn't exist, then there is nothing to backup
 if test ! -d $src
     logger -t home.bkp.fish "Source folder does not exist"
-    echo "home.bkp.fish -- Source folder does not exist"
+    echo "home.bkp.fish -- Source folder does not exist" >>$log
     exit
 end
 echo "development.bkp.fish -- Source folder: $src" >>$log
 
 echo "development.bkp.fish -- Creating restic snapshot" >>$log
 restic backup \
-    --tag development
-    --exclude '.venv' \
-    --exclude 'node_modules' \
+    --tag=development \
+    --exclude='.venv' \
+    --exclude='node_modules' \
     $src  >>$log
 
 if test $status -ne 0
