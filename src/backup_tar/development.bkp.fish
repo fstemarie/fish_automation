@@ -26,8 +26,8 @@ end
 
 echo "development.bkp.fish -- Creating archive" >>$log
 tar --create --verbose --gzip --listed-incremental=$dst/development.snar \
-    --exclude '.venv' \
-    --exclude 'node_modules' \
+    --exclude='.venv' \
+    --exclude='node_modules' \
     --directory=$dir \
     --file=$arch \
     $base >>$log
