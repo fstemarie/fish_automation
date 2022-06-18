@@ -6,6 +6,8 @@ set dst /l/backup/raktar/automation
 set log /var/log/automation/automation.tar.log
 set arch $dst"/automation."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 
+date >>$log
+
 # if the source folder doesn't exist, then there is nothing to backup
 if test ! -d $src
     logger -t automation.bkp.fish "Source folder does not exist"
@@ -33,8 +35,8 @@ alias backups="command ls -1trd $dst/automation.*.tgz"
 set nb_tot (backups | count)
 set nb_diff (math $nb_tot - $nb_max)
 if test $nb_diff -gt 0
-    echo \n---------------------------------------------- >>$log
     echo "automation.bkp.fish -- Removing older archives" >>$log
     backups | head -n$nb_diff >>$log
     backups | head -n$nb_diff | xargs rm -f >>$log
 end
+echo \n---------------------------------------------- >>$log

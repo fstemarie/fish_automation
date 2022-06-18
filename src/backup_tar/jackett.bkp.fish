@@ -5,6 +5,8 @@ set src /data/containers/jackett
 set dst /l/backup/raktar/containers/jackett
 set log /var/log/automation/jackett.tar.log
 
+date >>$log
+
 set arc $dst"/jackett."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 # if the source folder doesn't exist, then there is nothing to backup
 if test ! -d $src

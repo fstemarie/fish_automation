@@ -6,6 +6,8 @@ set base (basename $src)
 set dst /l/backup/raktar/home
 set log /var/log/automation/home.tar.log
 
+date >>$log
+
 set arch $dst"/home."(date +%s)".tgz"
 if test ! -f $dst/home.full.tgz
     set arch $dst"/home.full.tgz"

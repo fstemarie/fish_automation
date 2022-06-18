@@ -5,6 +5,8 @@ set src /data/containers/qbittorrent
 set dst /l/backup/raktar/containers/qbittorrent
 set log /var/log/automation/qbittorrent.tar.log
 
+date >>$log
+
 set arc $dst"/qbittorrent."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 # if the source folder doesn't exist, then there is nothing to backup
 if test ! -d $src

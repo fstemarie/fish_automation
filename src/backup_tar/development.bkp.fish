@@ -6,6 +6,8 @@ set dir (dirname $src)
 set base (basename $src)
 set log /var/log/automation/development.tar.log
 
+date >>$log
+
 set arch $dst"/development."(date +%s)".tgz"
 if test ! -f $dst/development.full.tgz
     set arch $dst"/development.full.tgz"
