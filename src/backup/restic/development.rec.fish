@@ -13,12 +13,14 @@ if test -z $RESTIC_PASSWORD
 end
 
 set dst /home/francois/development
-if test ! -d $dst
-    echo "development.rec.fish -- Creating non existent destination"
-    mkdir -p $dst
+if test -d $dst
+    logger -t development.bkp.fish "Moving existing destination"
+    echo "development.rec.fish -- Moving existing destination"
+    mv $dst $dst.(date +%s)
 end
+mkdir -p $dst
 
-restic restore --latest --tag development --target $dst
+restic restore --latest --tag development --target /
 if test $status -ne 0
     logger -t development.rec.fish "Could not restore snapshot"
     echo "development.rec.fish -- Could not restore snapshot"
