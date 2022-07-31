@@ -15,7 +15,8 @@
                 "panel": "shared",
                 "showReuseMessage": true,
                 "clear": true
-            }
+            },
+            "problemMatcher": []
         },
         {
             "label": "Deploy backup_restic scripts",
@@ -29,7 +30,8 @@
                 "panel": "shared",
                 "showReuseMessage": true,
                 "clear": true
-            }
+            },
+            "problemMatcher": []
         },
         {
             "label": "Deploy DuckDNS script",
@@ -47,11 +49,12 @@
         },
         {
             "label": "Deploy All",
-            "dependsOn":[
+            "dependsOn": [
                 "Deploy backup_tar scripts",
                 "Deploy backup_restic scripts",
                 "Deploy DuckDNS script"
-            ]
+            ],
+            "problemMatcher": []
         }
     ]
 }
