@@ -5,5 +5,5 @@ set scripts "$backup/tar/"{automation,config,jackett,qbittorrent}".bkp.fish"
 
 for script in $scripts
     echo "Running: $script"
-    script &
+    fish $script
 end
