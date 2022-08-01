@@ -21,7 +21,7 @@ if test ! -d $dst
     mkdir -p $dst >>$log
 end
 
-echo "qbittorrent.bkp.fish -- Creating archive"
+echo "qbittorrent.bkp.fish -- Creating archive" >>$log
 tar --create --verbose --gzip --file $arc --directory $src/.. \
     --exclude={"logs", ".cache", "BT_backup", "ipc-socket"} \
     qbittorrent >>$log

@@ -22,7 +22,7 @@ if test ! -d $dst
 end
 
 echo "jackett.bkp.fish -- Creating archive" >>$log
-tar -cvzf $arc -C $src/.. jackett
+tar -cvzf $arc -C $src/.. jackett >>$log
 if test $status -ne 0
     logger -t jackett.bkp.fish "Backup unsuccessful"
     echo "jackett.bkp.fish -- Backup unsuccessful" >>$log
