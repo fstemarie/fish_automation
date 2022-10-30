@@ -25,6 +25,7 @@ echo "development.bkp.fish -- Source folder: $src" >>$log
 
 echo "development.bkp.fish -- Creating restic snapshot" >>$log
 restic backup \
+    --host=raktar \
     --tag=development \
     --exclude='.venv' \
     --exclude='node_modules' \
@@ -39,7 +40,12 @@ logger -t development.bkp.fish "Snapshot created successfully"
 echo "development.bkp.fish -- Snapshot created successfully" >>$log
 
 echo "development.bkp.fish -- Forgetting snapshots" >>$log
-restic forget --prune --tag development --keep-daily 14 --keep-monthly 6 >>$log
+restic forget \
+    --host=raktar \
+    --tag=development \
+    --keep-daily 14 \
+    --keep-monthly 6 \
+    --prune >>$log
 if test $status -ne 0
     logger -t development.bkp.fish "Unable to forget snapshots"
     echo "development.bkp.fish -- Unable to forget snapshots" >>$log

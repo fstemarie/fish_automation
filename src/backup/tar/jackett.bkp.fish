@@ -2,27 +2,32 @@
 
 set nb_max 5
 set src /data/containers/jackett
-set dst /l/backup/raktar/containers/jackett
+set dir (dirname $src)
+set base (basename $src)
+set dst /l/backup/raktar/jackett
 set log /var/log/automation/jackett.tar.log
+set arch $dst"/jackett."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 
 date >>$log
 
-set arc $dst"/jackett."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 # if the source folder doesn't exist, then there is nothing to backup
-if test ! -d $src
+if test ! -d "$src"
     logger -t jackett.bkp.fish "Source folder does not exist"
     echo "jackett.bkp.fish -- Source folder does not exist" >>$log
     exit
 end
 
 # if the destination folder does not exist, create it
-if test ! -d $dst
+if test ! -d "$dst"
     echo "jackett.bkp.fish -- Creating non-existent destination" >>$log
-    mkdir -p $dst
+    mkdir -p "$dst"
 end
 
 echo "jackett.bkp.fish -- Creating archive" >>$log
-tar -cvzf $arc -C $src/.. jackett >>$log
+tar --create \
+    --file="$arch" \
+    --directory="$dir" "$base" \
+    --verbose --gzip >>$log
 if test $status -ne 0
     logger -t jackett.bkp.fish "Backup unsuccessful"
     echo "jackett.bkp.fish -- Backup unsuccessful" >>$log

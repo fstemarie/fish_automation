@@ -2,6 +2,8 @@
 
 set nb_max 5
 set src /data/config
+set dir (dirname $src)
+set base (basename $src)
 set dst /l/backup/raktar/config
 set log /var/log/automation/config.tar.log
 
@@ -9,20 +11,23 @@ date >>$log
 
 set arch $dst"/config."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 # if the source folder doesn't exist, then there is nothing to backup
-if test ! -d $src
+if test ! -d "$src"
     logger -t config.bkp.fish "Source folder does not exist"
     echo "config.bkp.fish -- Source folder does not exist" >>$log
     exit
 end
 
 # if the destination folder does not exist, create it
-if test ! -d $dst
+if test ! -d "$dst"
     echo "config.bkp.fish -- Creating non-existent destination" >>$log
-    mkdir -p $dst >>$log
+    mkdir -p "$dst" >>$log
 end
 
 echo "config.bkp.fish -- Creating archive" >>$log
-tar -cvzf $arch -C $src/.. config >>$log
+tar --create \
+    --file="$arch" \
+    --directory="$dir" "$base" \
+    --verbose --gzip >>$log
 if test $status -ne 0
     logger -t config.bkp.fish "Backup unsuccessful"
     echo "config.bkp.fish -- Backup unsuccessful" >>$log

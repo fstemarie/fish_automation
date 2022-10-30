@@ -2,6 +2,8 @@
 
 set nb_max 5
 set src /data/automation
+set dir (dirname $src)
+set base (basename $src)
 set dst /l/backup/raktar/automation
 set log /var/log/automation/automation.tar.log
 set arch $dst"/automation."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
@@ -22,7 +24,10 @@ if test ! -d $dst
 end
 
 echo "automation.bkp.fish -- Creating archive" >>$log
-tar -cvzf $arch -C $src/.. automation >>$log
+tar --create \
+    --file="$arch" \
+    --directory="$dir" "$base" \
+    --verbose --gzip >>$log
 if test $status -ne 0
     logger -t automation.bkp.fish "Backup unsuccessful"
     echo "automation.bkp.fish -- Backup unsuccessful" >>$log

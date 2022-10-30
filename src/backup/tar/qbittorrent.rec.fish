@@ -1,11 +1,11 @@
 #! /usr/bin/fish
 
-set dst /data/containers/qbittorrent
-set src /l/backup/raktar/containers/qbittorrent
+set src /l/backup/raktar/qbittorrent
+set dst /data/qbittorrent
+set arch (command ls -1d $src/qbittorrent.* | head -n1)
 
-set arc (command ls -1d $src/qbittorrent.* | head -n1)
 # if archive does not exist, exit
-if test ! -f "$arc"
+if test ! -f "$arch"
     logger -t qbittorrent.rec.fish "Archive not found"
     echo "qbittorrent.rec.fish -- Archive not found"
     exit
@@ -17,7 +17,10 @@ if test ! -d "$dst"
     mkdir -p "$dst"
 end
 
-tar -xvzf "$arc" -C "$dst"
+tar --extract \
+    --file="$arch" \
+    --directory="$dst/.." \
+    --verbose --gzip
 if test $status -ne 0
     logger -t qbittorrent.rec.fish "Recovery unsuccessful"
     echo "qbittorrent.rec.fish -- Recovery unsuccessful"

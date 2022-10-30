@@ -25,6 +25,7 @@ echo "home.bkp.fish -- Source folder: $src" >>$log
 
 echo "home.bkp.fish -- Creating restic snapshot" >>$log
 restic backup \
+    --host=raktar \
     --tag=home \
     --exclude='.cache' \
     --exclude='.vscode*' \
@@ -39,7 +40,12 @@ logger -t home.bkp.fish "Snapshot created successfully"
 echo "home.bkp.fish -- Snapshot created successfully" >>$log
 
 echo "home.bkp.fish -- Forgetting snapshots" >>$log
-restic forget --prune --tag home --keep-daily 14 --keep-monthly 6 >>$log
+restic forget \
+    --host=raktar \
+    --tag=home \
+    --keep-daily 14 \
+    --keep-monthly 6 \
+    --prune >>$log
 if test $status -ne 0
     logger -t home.bkp.fish "Unable to forget snapshots"
     echo "home.bkp.fish -- Unable to forget snapshots" >>$log

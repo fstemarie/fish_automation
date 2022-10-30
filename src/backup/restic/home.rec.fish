@@ -20,7 +20,11 @@ if test -d $dst
 end
 mkdir -p $dst
 
-restic restore latest --tag home --target /
+restic restore latest \
+    --host=raktar \
+    --tag=home \
+    --latest \
+    --target /
 if test $status -ne 0
     logger -t home.rec.fish "Could not restore snapshot"
     echo "home.rec.fish -- Could not restore snapshot"

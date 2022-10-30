@@ -2,10 +2,10 @@
 
 set dst /data/containers/jackett
 set src /l/backup/raktar/containers/jackett
+set arch (command ls -1d $src/jackett.*.tgz | head -n1)
 
-set arc (command ls -1d $src/jackett.* | head -n1)
 # if archive does not exist, exit
-if test ! -f "$arc"
+if test ! -f "$arch"
     logger -t jackett.rec.fish "Archive not found"
     echo "jackett.rec.fish -- Archive not found"
     exit
@@ -17,7 +17,10 @@ if test ! -d "$dst"
     mkdir -p "$dst"
 end
 
-tar -xvzf "$arc" -C "$dst"
+tar --extract \
+    --file="$arch" \
+    --directory="$dst/.." \
+    --verbose --gzip
 if test $status -ne 0
     logger -t jackett.rec.fish "Recovery unsuccessful"
     echo "jackett.rec.fish -- Recovery unsuccessful"

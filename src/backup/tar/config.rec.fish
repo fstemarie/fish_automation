@@ -17,7 +17,10 @@ if test ! -d "$dst"
     mkdir -p "$dst"
 end
 
-tar -xvzf "$arch" -C "$dst"
+tar --extract \
+    --file="$arch" \
+    --directory="$dst/.." \
+    --verbose --gzip
 if test $status -ne 0
     logger -t automation.rec.fish "Recovery unsuccessful"
     echo "automation.rec.fish -- Recovery unsuccessful"

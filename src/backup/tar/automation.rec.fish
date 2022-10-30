@@ -2,8 +2,8 @@
 
 set dst /data/automation
 set src /l/backup/raktar/automation
+set arch (command ls -1d $src/automation.*.tgz | head -n1)
 
-set arch (command ls -1d $src/automation.* | head -n1)
 # if archive does not exist, exit
 if test ! -f "$arch"
     logger -t automation.rec.fish "Archive not found"
@@ -22,7 +22,10 @@ if test ! -d "$dst"
     end
 end
 
-tar -xvzf "$arch" -C "$dst"
+tar --extract \
+    --file="$arch" \
+    --directory="$dst/.." \
+    --verbose --gzip
 if test $status -ne 0
     logger -t automation.rec.fish "Recovery unsuccessful"
     echo "automation.rec.fish -- Recovery unsuccessful"
