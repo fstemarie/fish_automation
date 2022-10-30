@@ -17,8 +17,8 @@ end
 
 # if the source folder doesn't exist, then there is nothing to backup
 if test ! -d $src
-    logger -t home.bkp.fish "Source folder does not exist"
-    echo "home.bkp.fish -- Source folder does not exist" >>$log
+    logger -t development.bkp.fish "Source folder does not exist"
+    echo "development.bkp.fish -- Source folder does not exist" >>$log
     exit
 end
 echo "development.bkp.fish -- Source folder: $src" >>$log
