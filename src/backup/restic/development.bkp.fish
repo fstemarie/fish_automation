@@ -52,8 +52,7 @@ restic forget \
     --host=raktar \
     --tag=development \
     --keep-daily 7 \
-    --keep-weekly 6 \
-    --prune | tee -a $log
+    --keep-weekly 6 | tee -a $log
 if test $status -ne 0
     logger -t development.bkp.fish "Unable to forget snapshots"
     echo "development.bkp.fish -- Unable to forget snapshots" | tee -a $log

@@ -49,8 +49,7 @@ echo "automation.bkp.fish -- Forgetting snapshots" | tee -a $log
 restic forget \
     --host=raktar \
     --tag=automation \
-    --keep-last 1 \
-    --prune | tee -a $log
+    --keep-last 1 | tee -a $log
 if test $status -ne 0
     logger -t automation.bkp.fish "Unable to forget snapshots"
     echo "automation.bkp.fish -- Unable to forget snapshots" | tee -a $log
