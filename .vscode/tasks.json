@@ -34,25 +34,10 @@
             "problemMatcher": []
         },
         {
-            "label": "Deploy DuckDNS script",
-            "detail": "Deploy DuckDNS script",
-            "type": "shell",
-            "command": ".vscode/tasks/deploy_duckdns_script.fish",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": true
-            }
-        },
-        {
             "label": "Deploy All",
             "dependsOn": [
                 "Deploy backup_tar scripts",
-                "Deploy backup_restic scripts",
-                "Deploy DuckDNS script"
+                "Deploy backup_restic scripts"
             ],
             "problemMatcher": []
         }
