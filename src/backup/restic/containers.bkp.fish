@@ -35,6 +35,12 @@ echo "containers.bkp.fish -- Creating restic snapshot" | tee -a $log
 restic backup \
     --host=raktar \
     --tag=containers \
+    --exclude='.bash_history' \
+    --exclude='heimdall/keys' \
+    --exclude='heimdall/log' \
+    --exclude='npm/data/nginx/dummykey.pem' \
+    --exclude='qBittorrent/logs' \
+    --exclude='sonarr/xdg/.mono/keypairs' \
     $src  | tee -a $log
 
 if test $status -ne 0

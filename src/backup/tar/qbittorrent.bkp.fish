@@ -25,7 +25,7 @@ end
 
 echo "qbittorrent.bkp.fish -- Creating archive" >>$log
 tar --create \
-    --exclude={"logs", ".cache", "BT_backup", "ipc-socket"} \
+    --exclude={"logs", ".cache", "BT_backup", "ipc-socket", ".bash_history"} \
     --file="$arch" \
     --directory="$dir" "$base" \
     --verbose --gzip >>$log
