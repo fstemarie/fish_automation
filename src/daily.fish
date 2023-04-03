@@ -1,14 +1,11 @@
 #! /usr/bin/fish
 
 set backup /data/automation/backup
-set scripts /data/automation/duckdns/duckdns.fish
-set -a scripts $backup/tar/{development,home}.bkp.fish
 
+restic unlock
 $backup/restic/development.bkp.fish
 $backup/restic/home.bkp.fish
 restic prune
 
-for script in $scripts
-    echo "Running: $script"
-    fish $script
-end
+$backup/tar/development.bkp.fish
+$backup/tar/home.bkp.fish
