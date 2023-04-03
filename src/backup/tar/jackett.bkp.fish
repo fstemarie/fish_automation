@@ -27,6 +27,7 @@ echo "jackett.bkp.fish -- Creating archive" >>$log
 tar --create \
     --file="$arch" \
     --directory="$dir" "$base" \
+    --exclude={'DataProtection'} \
     --verbose --gzip >>$log
 if test $status -ne 0
     logger -t jackett.bkp.fish "Backup unsuccessful"
