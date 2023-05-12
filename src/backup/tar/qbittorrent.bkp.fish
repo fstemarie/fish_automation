@@ -1,12 +1,12 @@
 #! /usr/bin/fish
 
+set src "/data/containers/qbittorrent"
+set dst "/l/backup/raktar/qbittorrent"
+set arch "$dst/qbittorrent."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
+set log "/var/log/automation/qbittorrent.tar.log"
 set nb_max 5
-set src /data/containers/qbittorrent
-set dir (dirname $src)
-set base (basename $src)
-set dst /l/backup/raktar/qbittorrent
-set log /var/log/automation/qbittorrent.tar.log
-set arch $dst"/qbittorrent."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
+set dir (dirname "$src")
+set base (basename "$src")
 
 date | tee -a $log
 
@@ -14,26 +14,30 @@ date | tee -a $log
 if test ! -d "$src"
     logger -t qbittorrent.bkp.fish "Source folder does not exist"
     echo "qbittorrent.bkp.fish -- Source folder does not exist" | tee -a $log
-    exit
+    exit 1
 end
 
 # if the destination folder does not exist, create it
 if test ! -d "$dst"
     echo "qbittorrent.bkp.fish -- Creating non-existent destination" | tee -a $log
-    mkdir -p "$dst" | tee -a $log
+    mkdir -p "$dst"
+    if test $status -ne 0
+        logger -t qbittorrent.bkp.fish "Cannot create missing destination. Exiting..."
+        echo "qbittorrent.bkp.fish -- Cannot create missing destination. Exiting..."
+        exit 1
+    end
 end
 
 echo "qbittorrent.bkp.fish -- Creating archive" | tee -a $log
-tar --create \
+tar --create --verbose --gzip \
+    --file="$arch" \
     --exclude={"logs", ".cache", "BT_backup", "ipc-socket", ".bash_history"} \
     --exclude="__pycache__" \
-    --file="$arch" \
-    --directory="$dir" "$base" \
-    --verbose --gzip | tee -a $log
+    --directory="$dir" "$base"  2>&1 | tee -a $log
 if test $status -ne 0
     logger -t qbittorrent.bkp.fish "Backup unsuccessful"
     echo "qbittorrent.bkp.fish -- Backup unsuccessful" | tee -a $log
-    exit
+    exit 1
 end
 logger -t qbittorrent.bkp.fish "The backup was successful"
 echo "qbittorrent.bkp.fish -- The backup was successful" | tee -a $log
@@ -45,5 +49,5 @@ if test $nb_diff -gt 0
     echo \n----------------------------------------------- | tee -a $log
     echo "qbittorrent.bkp.fish -- Removing older archives" | tee -a $log
     backups | head -n$nb_diff | tee -a $log
-    backups | head -n$nb_diff | xargs rm -f | tee -a $log
+    backups | head -n$nb_diff | xargs rm -f > /dev/null
 end
