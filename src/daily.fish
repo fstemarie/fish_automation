@@ -1,11 +1,29 @@
 #! /usr/bin/fish
 
-set backup /data/automation/backup
+function main
+    set backup (status dirname)/backup
+    set scripts \
+        "restic/development.bkp.fish" \
+        "restic/home.bkp.fish" \
+        "tar/development.bkp.fish" \
+        "tar/home.bkp.fish"
 
-restic unlock
-$backup/restic/development.bkp.fish
-$backup/restic/home.bkp.fish
-restic prune
+    restic unlock
+    for script in $scripts
+        if $backup/$script
+            set -a notifications "🟢 $script"
+        else
+            set -a notifications "🔴 $script"
+        end
+    end
+    restic prune
 
-$backup/tar/development.bkp.fish
-$backup/tar/home.bkp.fish
+    set notifications (string join '\n' $notifications)
+    echo -e $notifications | curl -T- \
+        --user :tk_1ev02vh79fsvs5ova2do41okahp7i \
+        -H "title: raktar.home daily backup report" \
+        -H "priority: low" \
+        "https://ntfy.falarie.duckdns.org/backup_raktar"
+end
+
+main
