@@ -1,0 +1,14 @@
+compress
+missingok
+notifempty
+
+/var/log/automation/{development,home}.*.log {
+    rotate 14
+    weekly
+}
+
+
+/var/log/automation/{automation,config,containers,jackett,qbittorrent}.*.log {
+    rotate 7
+    monthly
+}
