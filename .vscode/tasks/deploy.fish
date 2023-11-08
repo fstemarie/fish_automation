@@ -14,6 +14,8 @@ if test ! -d "$dst"
 end
 
 echo "$s -- Copying backup scripts to destination"
+rm -fr "$dst"
+mkdir -p "$dst"
 cp -R --remove-destination ./src/* "$dst"
 if test $status -ne 0
     echo "$s -- Error while copying backup scripts"
