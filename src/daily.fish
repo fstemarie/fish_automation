@@ -20,10 +20,10 @@ function main
 
     set notifications (string join '\n' $notifications)
     echo -e $notifications | curl -T- \
-        --user :tk_1ev02vh79fsvs5ova2do41okahp7i \
         -H "title: raktar.home daily backup report" \
         -H "priority: low" \
-        "https://ntfy.falarie.duckdns.org/backup_raktar"
+        -H "markdown: yes" \
+        "https://ntfy.sh/backup_raktar_IXUOX4TPMNiuX1zK"
 end
 
 main
