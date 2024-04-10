@@ -22,7 +22,7 @@ function main
         -H "title: raktar.home weekly backup report" \
         -H "priority: low" \
         -H "markdown: yes" \
-        "https://ntfy.sh/backup_raktar_IXUOX4TPMNiuX1zK"
+        https://ntfy.sh/backup_CtSuPrvjeCEuckcZ
 end
 
 main
