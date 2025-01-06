@@ -7,7 +7,12 @@ function main
         "restic/config.bkp.fish" \
         "restic/containers.bkp.fish" \
         "tar/jackett.bkp.fish" \
-        "tar/qbittorrent.bkp.fish"
+        "tar/qbittorrent.bkp.fish" \
+        "docker/iot.update.fish" \
+        "docker/mariadb.update.fish" \
+        "docker/media.update.fish" \
+        "docker/pirateisland.update.fish" \
+        "docker/radicale.update.fish"
 
     restic unlock
     for script in $scripts
