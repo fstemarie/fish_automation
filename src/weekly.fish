@@ -5,7 +5,9 @@ function main
     set scripts \
         "restic/automation.bkp.fish" \
         "restic/config.bkp.fish" \
-        "restic/containers.bkp.fish"
+        "restic/containers.bkp.fish" \
+        "tar/jackett.bkp.fish" \
+        "tar/qbittorrent.bkp.fish"
 
     restic unlock
     for script in $scripts
