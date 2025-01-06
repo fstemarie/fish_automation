@@ -6,7 +6,8 @@ function main
         "restic/development.bkp.fish" \
         "restic/home.bkp.fish" \
         "tar/development.bkp.fish" \
-        "tar/home.bkp.fish"
+        "tar/home.bkp.fish" \
+        "rsync/podcasts.bkp.fish"
 
     restic unlock
     for script in $scripts
