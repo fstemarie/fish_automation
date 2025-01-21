@@ -17,9 +17,15 @@ if test -z $RESTIC_REPOSITORY
     exit 1
 end
 
-if test -z $RESTIC_PASSWORD
-    logger -t home.bkp.fish "RESTIC_PASSWORD empty. Cannot proceed"
-    echo "home.bkp.fish -- RESTIC_PASSWORD empty. Cannot proceed" | tee -a $log
+if test -z $RESTIC_PASSWORD_FILE
+    logger -t automation.bkp.fish "RESTIC_PASSWORD_FILE empty. Cannot proceed"
+    echo "automation.bkp.fish -- RESTIC_PASSWORD_FILE empty. Cannot proceed" | tee -a $log
+    exit 1
+end
+
+if test ! -e $RESTIC_PASSWORD_FILE
+    logger -t automation.bkp.fish "RESTIC_PASSWORD_FILE does not exist. Cannot proceed"
+    echo "automation.bkp.fish -- RESTIC_PASSWORD_FILE does not exist. Cannot proceed" | tee -a $log
     exit 1
 end
 
