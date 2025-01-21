@@ -1,22 +1,21 @@
 #! /usr/bin/fish
 
 function main
-    set backup (status dirname)/backup
+    pushd /data/automation
     set scripts \
-        "restic/automation.bkp.fish" \
-        "restic/config.bkp.fish" \
-        "restic/containers.bkp.fish" \
-        "tar/jackett.bkp.fish" \
-        "tar/qbittorrent.bkp.fish" \
-        "docker/iot.update.fish" \
-        "docker/mariadb.update.fish" \
-        "docker/media.update.fish" \
-        "docker/pirateisland.update.fish" \
-        "docker/radicale.update.fish"
+        "./backup/restic/automation.bkp.fish" \
+        "./backup/restic/config.bkp.fish" \
+        "./backup/tar/jackett.bkp.fish" \
+        "./backup/tar/qbittorrent.bkp.fish" \
+        "./docker/iot.update.fish" \
+        "./docker/mariadb.update.fish" \
+        "./docker/media.update.fish" \
+        "./docker/pirateisland.update.fish" \
+        "./docker/radicale.update.fish"
 
     restic unlock
     for script in $scripts
-        if $backup/$script
+        if $script
             set -a notifications "🟢 $script"
         else
             set -a notifications "🔴 $script"
@@ -30,6 +29,8 @@ function main
         -H "priority: low" \
         -H "markdown: yes" \
         https://ntfy.sh/automation_ewNXGlvorS6g8NUr
+
+    popd
 end
 
 main

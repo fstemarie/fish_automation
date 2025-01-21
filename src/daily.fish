@@ -1,17 +1,17 @@
 #! /usr/bin/fish
 
 function main
-    set backup (status dirname)/backup
+    pushd /data/automation
     set scripts \
-        "restic/development.bkp.fish" \
-        "restic/home.bkp.fish" \
-        "tar/development.bkp.fish" \
-        "tar/home.bkp.fish" \
-        "rsync/podcasts.bkp.fish"
+        "./backup/restic/development.bkp.fish" \
+        "./backup/restic/home.bkp.fish" \
+        "./backup/tar/development.bkp.fish" \
+        "./backup/tar/home.bkp.fish" \
+        "./backup/rsync/podcasts.bkp.fish"
 
     restic unlock
     for script in $scripts
-        if $backup/$script
+        if $script
             set -a notifications "🟢 $script"
         else
             set -a notifications "🔴 $script"
@@ -25,6 +25,8 @@ function main
         -H "priority: low" \
         -H "markdown: yes" \
         https://ntfy.sh/automation_ewNXGlvorS6g8NUr
+
+    popd
 end
 
 main

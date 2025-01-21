@@ -1,12 +1,12 @@
 #! /usr/bin/fish
 
 function main
-    set backup (status dirname)/backup
+    pushd /data/automation
     set scripts
 
     restic unlock
     for script in $scripts
-        if $backup/$script
+        if $script
             set -a notifications "🟢 $script"
         else
             set -a notifications "🔴 $script"
@@ -20,6 +20,8 @@ function main
         -H "priority: low" \
         -H "markdown: yes" \
         https://ntfy.sh/automation_ewNXGlvorS6g8NUr
+
+    popd
 end
 
 # main
