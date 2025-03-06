@@ -3,11 +3,12 @@
 function main
     pushd /data/automation
     set scripts \
-        "./backup/restic/development.bkp.fish" \
-        "./backup/restic/home.bkp.fish" \
-        "./backup/tar/development.bkp.fish" \
-        "./backup/tar/home.bkp.fish" \
-        "./backup/rsync/podcasts.bkp.fish"
+        "backup/restic/development.bkp.fish" \
+        "backup/restic/home.bkp.fish" \
+        "backup/tar/development.bkp.fish" \
+        "backup/tar/home.bkp.fish" \
+        "backup/mariadb.bkp.fish" \
+        "backup/rsync/podcasts.bkp.fish"
 
     restic unlock
     for script in $scripts
