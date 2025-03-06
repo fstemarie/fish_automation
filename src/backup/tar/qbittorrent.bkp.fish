@@ -31,8 +31,7 @@ end
 echo "qbittorrent.bkp.fish -- Creating archive" | tee -a $log
 tar --create --verbose --gzip \
     --file="$arch" \
-    --exclude={"logs", ".cache", "BT_backup", "ipc-socket", ".bash_history"} \
-    --exclude="__pycache__" \
+    --exclude={".*", "BT_backup", "GeoDB", "ipc-socket", "lockfile", "logs", "qBittorrent-conf.json", "__pycache__"} \
     --directory="$dir" "$base"  2>&1 | tee -a $log
 if test $status -ne 0
     logger -t qbittorrent.bkp.fish "Backup unsuccessful"
