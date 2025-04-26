@@ -5,7 +5,7 @@ set arch "$dst/mariadb."(date +%Y%m%dT%H%M%S | tr -d :-)".sql.gz"
 set log "/var/log/automation/mariadb.tar.log"
 set nb_max 5
 set script (status basename)
-set secret "/home/francois/secrets/mariadb-backup.fish"
+set secret "/home/francois/.secrets/mariadb-backup.fish"
 
 echo "
 
