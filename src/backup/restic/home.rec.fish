@@ -2,26 +2,27 @@
 
 # Append date to destination name to avoid data loss
 set dst "$HOME/home."(date +%s)
+set script (status basename)
 
 if test -z $RESTIC_REPOSITORY
-    logger -t home.rec.fish "RESTIC_REPOSITORY empty. Cannot proceed"
-    echo "dhomevelopment.rec.fish -- RESTIC_REPOSITORY empty. Cannot proceed"
+    logger -t $script "RESTIC_REPOSITORY empty. Cannot proceed"
+    echo "$script -- RESTIC_REPOSITORY empty. Cannot proceed"
     exit 1
 end
 
 if test -z $RESTIC_PASSWORD
-    logger -t home.rec.fish "RESTIC_PASSWORD empty. Cannot proceed"
-    echo "home.rec.fish -- RESTIC_PASSWORD empty. Cannot proceed"
+    logger -t $script "RESTIC_PASSWORD empty. Cannot proceed"
+    echo "$script -- RESTIC_PASSWORD empty. Cannot proceed"
     exit 1
 end
 
 # if target destination does not exist, create it
 if test ! -d "$dst"
-    echo "home.rec.fish -- Creating non existent destination"
+    echo "$script -- Creating non existent destination"
     mkdir -p "$dst"
     if test $status -ne 0
-        logger -t home.rec.fish "Cannot create missing destination. Exiting..."
-        echo "home.rec.fish -- Cannot create missing destination. Exiting..."
+        logger -t $script "Cannot create missing destination. Exiting..."
+        echo "$script -- Cannot create missing destination. Exiting..."
         exit 1
     end
 end
@@ -32,9 +33,9 @@ restic restore latest \
     --tag=home \
     --target "$dst"
 if test $status -ne 0
-    logger -t home.rec.fish "Could not restore snapshot"
-    echo "home.rec.fish -- Could not restore snapshot"
+    logger -t $script "Could not restore snapshot"
+    echo "$script -- Could not restore snapshot"
     exit 1
 end
-logger -t home.rec.fish "Snapshot restoration successful"
-echo "home.rec.fish -- Snapshot restoration successful"
+logger -t $script "Snapshot restoration successful"
+echo "$script -- Snapshot restoration successful"

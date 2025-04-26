@@ -3,19 +3,20 @@
 set src "/l/backup/raktar/qbittorrent"
 set dst "/data/containers/qbittorrent"
 set arch (command ls -1dr $src/qbittorrent.*.tgz | head -n1)
+set script (status basename)
 
 # if archive does not exist, exit
 if test ! -f "$arch"
-    logger -t qbittorrent.rec.fish "Archive not found"
-    echo "qbittorrent.rec.fish -- Archive not found"
+    logger -t $script "Archive not found"
+    echo "$script -- Archive not found"
     exit 1
 end
-echo "qbittorrent.rec.fish -- Using archive: $arch"
+echo "$script -- Using archive: $arch"
 
 # Append date to name to avoid data loss
 if test -d "$dst"
-    logger -t qbittorrent.rec.fish "Destination already exists"
-    echo "qbittorrent.rec.fish -- Destination already exists"
+    logger -t $script "Destination already exists"
+    echo "$script -- Destination already exists"
 
     set old "$dst"
     set dst "$old."(date +%s)
@@ -26,24 +27,24 @@ if test -d "$dst"
 end
 
 # Create non-existing destination
-echo "qbittorrent.rec.fish -- Creating non existent destination"
+echo "$script -- Creating non existent destination"
 mkdir -p "$dst"
 if test $status -ne 0
-    logger -t qbittorrent.rec.fish "Cannot create missing destination. Exiting..."
-    echo "qbittorrent.rec.fish -- Cannot create missing destination. Exiting..."
+    logger -t $script "Cannot create missing destination. Exiting..."
+    echo "$script -- Cannot create missing destination. Exiting..."
     exit 1
 end
 
 # Recover data from archive
-echo "qbittorrent.rec.fish -- Recovering..."
+echo "$script -- Recovering..."
 tar --extract --verbose --gzip \
     --file="$arch" \
     --directory="$dst" \
     --strip=1
 if test $status -ne 0
-    logger -t qbittorrent.rec.fish "Recovery unsuccessful"
-    echo "qbittorrent.rec.fish -- Recovery unsuccessful"
+    logger -t $script "Recovery unsuccessful"
+    echo "$script -- Recovery unsuccessful"
     exit 1
 end
-logger -t qbittorrent.rec.fish "The recovery was successful"
-echo "qbittorrent.rec.fish -- The recovery was successful"
+logger -t $script "The recovery was successful"
+echo "$script -- The recovery was successful"
