@@ -3,38 +3,36 @@
 set src "/l/backup/raktar/home"
 # Append date to destination name to avoid data loss
 set dst "$HOME/home."(date +%s)
-set arch (command ls -1dr $src/home.*.tgz | head -n1)
+set arch (command ls -1dr "$src/home.*.tgz" | head -n1)
 set script (status basename)
+
+source (status dirname)/../../log.fish
 
 # if archive does not exist, exit
 if test ! -f "$arch"
-    logger -t $script "Archive not found"
-    echo "$script -- Archive not found"
+    log "Archive not found"
     exit 1
 end
-echo "$script -- Using archive: $arch"
+log "Using archive: $arch" only_echo
 
 # if target destination does not exist, create it
 if test ! -d "$dst"
-    echo "$script -- Creating non existent destination"
+    log "Creating non existent destination: $dst" only_echo
     mkdir -p "$dst"
     if test $status -ne 0
-        logger -t $script "Cannot create missing destination. Exiting..."
-        echo "$script -- Cannot create missing destination. Exiting..."
+        log "Cannot create missing destination. Exiting..."
         exit 1
     end
 end
 
 # Recover data from archive
-echo "$script -- Recovering..."
+log "Recovering..." only_echo
 tar --extract --verbose --gzip \
     --file="$arch" \
     --directory="$dst" \
     --strip=1
 if test $status -ne 0
-    logger -t $script "Recovery unsuccessful"
-    echo "$script -- Recovery unsuccessful"
+    log "Recovery unsuccessful"
     exit 1
 end
-logger -t $script "The recovery was successful"
-echo "$script -- The recovery was successful"
+log "The recovery was successful"

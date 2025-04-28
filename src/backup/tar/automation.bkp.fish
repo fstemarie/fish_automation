@@ -13,7 +13,8 @@ echo "
 
 
 -------------------------------------
- "(date -Ins)" 
+[[ Running $script ]]
+"(date -Iseconds)" 
 -------------------------------------
 " | tee -a $log
 
@@ -55,4 +56,3 @@ if test $nb_diff -gt 0
     backups | head -n$nb_diff | tee -a $log
     backups | head -n$nb_diff | xargs rm -f > /dev/null 
 end
-echo \n---------------------------------------------- | tee -a $log

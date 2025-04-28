@@ -1,12 +1,12 @@
 #! /usr/bin/fish
-set domains falarie pegleg
+set domains falarie
 set token d05499d5-3208-4b85-8bf2-be3ebbdc3ec2
 
 echo "
 
 
 -------------------------------------
- "(date -Ins)" 
+ "(date -Iseconds)" 
 -------------------------------------
 " | tee -a $log
 

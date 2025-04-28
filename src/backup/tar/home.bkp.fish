@@ -9,7 +9,14 @@ set dir (dirname "$src")
 set base (basename "$src")
 set script (status basename)
 
-date | tee -a $log
+echo "
+
+
+-------------------------------------
+[[ Running $script ]]
+"(date -Iseconds)"
+-------------------------------------
+" | tee -a $log
 
 # if the source folder doesn't exist, then there is nothing to backup
 if test ! -d "$src"

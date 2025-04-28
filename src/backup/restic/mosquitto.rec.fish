@@ -9,16 +9,14 @@ if test -z $RESTIC_REPOSITORY
     exit 1
 end
 
-if test -z $RESTIC_PASSWORD
-    logger -t $script "RESTIC_PASSWORD empty. Cannot proceed"
-    echo "$script -- RESTIC_PASSWORD empty. Cannot proceed"
+if test -z $RESTIC_PASSWORD_FILE or test ! -e $RESTIC_PASSWORD_FILE 
+    log "RESTIC_PASSWORD_FILE empty or does not exist. Cannot proceed"
     exit 1
 end
 
 # Append date to name to avoid data loss
 if test -d "$dst"
-    logger -t $script "Destination already exists"
-    echo "$script -- Destination already exists"
+    log "Destination already exists"
 
     set old "$dst"
     set dst "$old."(date +%s)
@@ -29,11 +27,10 @@ if test -d "$dst"
 end
 
 # Create non-existing destination
-echo "$script -- Creating non existent destination"
+log "Creating non existent destination" only_echo
 mkdir -p "$dst"
 if test $status -ne 0
-    logger -t $script "Cannot create missing destination. Exiting..."
-    echo "$script -- Cannot create missing destination. Exiting..."
+    log "Cannot create missing destination. Exiting..."
     exit 1
 end
 
@@ -43,9 +40,7 @@ restic restore latest \
     --tag=mosquitto \
     --target "$dst"
 if test $status -ne 0
-    logger -t $script "Could not restore snapshot"
-    echo "$script -- Could not restore snapshot"
+    log "Could not restore snapshot"
     exit 1
 end
-logger -t $script "Snapshot restoration successful"
-echo "$script -- Snapshot restoration successful"
+log "Snapshot restored successfully"
