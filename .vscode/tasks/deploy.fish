@@ -12,7 +12,7 @@ if test -d "$dst"
     end
 end
 
-echo "$s -- Creating non existing destination $dst"
+echo "$s -- Creating non-existing destination $dst"
 mkdir -p "$dst"
 if test $status -ne 0
     echo "$s -- Error while creating destination. Unable to proceed..."
