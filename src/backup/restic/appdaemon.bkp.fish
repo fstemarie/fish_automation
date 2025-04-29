@@ -4,10 +4,9 @@ set src "/data/containers/appdaemon"
 set log "/var/log/automation/appdaemon.restic.log"
 set script (status basename)
 
-source (script dirname)/../../log.fish
+source (status dirname)/../../log.fish
 
 echo "
-
 
 -------------------------------------
 [[ Running $script ]]
@@ -15,24 +14,24 @@ echo "
 -------------------------------------
 " | tee -a $log
 
-if test -z $RESTIC_REPOSITORY
-    log "RESTIC_REPOSITORY empty. Cannot proceed"
+if test -z "$RESTIC_REPOSITORY"
+    error "RESTIC_REPOSITORY empty. Cannot proceed"
     exit 1
 end
 
-if test -z $RESTIC_PASSWORD_FILE or test ! -e $RESTIC_PASSWORD_FILE 
-    log "RESTIC_PASSWORD_FILE empty or does not exist. Cannot proceed"
+if test -z "$RESTIC_PASSWORD_FILE" || ! test -e "$RESTIC_PASSWORD_FILE"
+    error "RESTIC_PASSWORD_FILE empty or does not exist. Cannot proceed"
     exit 1
 end
 
 # if the source folder doesn't exist, then there is nothing to backup
 if test ! -d "$src"
-    log "Source folder does not exist. Cannot proceed"
+    error "Source folder does not exist. Cannot proceed"
     exit 1
 end
 
-log "Source folder: $src" only_echo
-log "Creating restic snapshot" only_echo
+info "Source folder: $src"
+info "Creating restic snapshot"
 pushd "$src"
 restic backup \
     --host=raktar \
@@ -40,19 +39,19 @@ restic backup \
     --exclude='__pycache__' \
     .  2>&1 | tee -a $log
 if test $status -ne 0
-    log "There was an error during the snapshot"
+    error "There was an error during the snapshot"
     exit 1
 end
 popd
 log "Snapshot created successfully"
 
-log "Forgetting snapshots" echo_only
+info "Forgetting snapshots"
 restic forget \
     --host=raktar \
     --tag=appdaemon \
     --keep-last=3 2>&1 | tee -a $log
 if test $status -ne 0
-    log "Unable to forget snapshots"
+    error "Unable to forget snapshots"
     exit 1
 end
 log "Snapshots forgotten successfully"

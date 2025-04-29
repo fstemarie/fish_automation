@@ -13,7 +13,6 @@ source (status dirname)/../../log.fish
 
 echo "
 
-
 -------------------------------------
 [[ Running $script ]]
 "(date -Iseconds)"
@@ -28,7 +27,7 @@ end
 
 # if the destination folder does not exist, create it
 if test ! -d "$dst"
-    log "Creating non-existent destination" only_echo
+    info "Creating non-existing destination"
     mkdir -p "$dst"
     if test $status -ne 0
         log "Cannot create missing destination"
@@ -36,7 +35,7 @@ if test ! -d "$dst"
     end
 end
 
-log "Creating archive" only_echo
+info "Creating archive"
 tar --create --verbose --gzip \
     --file="$arch" \
     --exclude={'__pycache__', '.git'} \

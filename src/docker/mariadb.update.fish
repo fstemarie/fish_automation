@@ -13,8 +13,8 @@ echo "
 " | tee -a $LOG
 
 if test ! -d "$PJDIR"
-    logger -t mariadb.update.fish "Non existing project directory. Cannot proceed"
-    echo "mariadb.update.fish -- Non existing project directory. Cannot proceed" | tee -a $LOG
+    logger -t mariadb.update.fish "non-existing project directory. Cannot proceed"
+    echo "mariadb.update.fish -- non-existing project directory. Cannot proceed" | tee -a $LOG
     exit 1
 end
 

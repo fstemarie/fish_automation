@@ -11,7 +11,6 @@ set script (status basename)
 
 echo "
 
-
 -------------------------------------
 [[ Running $script ]]
 "(date -Iseconds)" 
@@ -27,7 +26,7 @@ end
 
 # if the destination folder does not exist, create it
 if test ! -d "$dst"
-    echo "$script -- Creating non-existent destination" | tee -a $log
+    echo "$script -- Creating non-existing destination" | tee -a $log
     mkdir -p "$dst"
     if test $status -ne 0
         logger -t $script "Cannot create missing destination. Exiting..."

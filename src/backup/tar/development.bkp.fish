@@ -11,7 +11,6 @@ set script (status basename)
 
 echo "
 
-
 -------------------------------------
 [[ Running $script ]]
 "(date -Iseconds)"
@@ -27,7 +26,7 @@ end
 
 # if the destination folder does not exist, create it
 if test ! -d "$dst"
-    echo "$script -- Creating non-existent destination" | tee -a $log
+    echo "$script -- Creating non-existing destination" | tee -a $log
     mkdir -p "$dst"
     if test $status -ne 0
         logger -t $script "Cannot create missing destination. Exiting..."
@@ -38,7 +37,7 @@ end
 
 echo "$script -- Creating archive" | tee -a $log
 tar --create --verbose --gzip \
-    --exclude={'.venv', 'node_modules'} \
+    --exclude={'.venv', 'node_modules', '.git'} \
     --file="$arch" \
     --directory="$dir" "$base"  2>&1 | tee -a $log
 if test $status -ne 0
@@ -57,4 +56,3 @@ if test $nb_diff -gt 0
     backups | head -n$nb_diff | tee -a $log
     backups | head -n$nb_diff | xargs rm -f > /dev/null
 end
-echo \n---------------------------------------------- | tee -a $log

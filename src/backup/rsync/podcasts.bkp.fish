@@ -23,24 +23,24 @@ if test ! -d "$src"
     log "Source folder does not exist"
     exit 1
 end
-log "Source folder: $src" only_echo
+info "Source folder: $src"
 
-log "Gathering remote file list" only_echo
+info "Gathering remote file list"
 set lsremote (ssh -o ConnectTimeout=5 bedroom find \"/media/256gb/podcasts/How Did This Get Made_\" -type f -printf \"%f\n\")
-log "Gathering local file list" only_echo
+info "Gathering local file list"
 set lslocal (find "/l/audio/podcasts/How Did This Get Made_/" -type f -printf "%f\n")
-log "Comparing lists" only_echo
+info "Comparing lists"
 printf "%s\n" $lsremote $lslocal | sort | uniq -u
 set diff (printf "%s\n" $lsremote $lslocal | sort | uniq -u | wc -l)
 if test $diff -eq 0
-    log "No files to transfer. Exiting early" only_echo
+    info "No files to transfer. Exiting early"
     if set -q podcasts_comm
         set podcasts_comm "NODIFFS"
     end
     exit 0
 end
 
-log "Transfering files" only_echo
+info "Transfering files"
 begin
     rsync \
         --verbose \

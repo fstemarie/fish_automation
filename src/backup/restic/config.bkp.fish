@@ -15,12 +15,12 @@ echo "
 -------------------------------------
 " | tee -a $log
 
-if test -z $RESTIC_REPOSITORY
+if test -z "$RESTIC_REPOSITORY"
     log "RESTIC_REPOSITORY empty. Cannot proceed"
     exit 1
 end
 
-if test -z $RESTIC_PASSWORD_FILE or test ! -e $RESTIC_PASSWORD_FILE 
+if test -z "$RESTIC_PASSWORD_FILE" || ! test -e "$RESTIC_PASSWORD_FILE" 
     log "RESTIC_PASSWORD_FILE empty or does not exist. Cannot proceed"
     exit 1
 end
@@ -30,9 +30,9 @@ if test ! -d "$src"
     log "Source folder does not exist"
     exit 1
 end
-log "Source folder: $src" only_echo
+info "Source folder: $src"
 
-log "Creating restic snapshot" only_echo
+info "Creating restic snapshot"
 pushd "$src"
 restic backup \
     --host=raktar \
@@ -46,7 +46,7 @@ end
 popd
 log "Snapshot created successfully"
 
-log "Forgetting snapshots" only_echo
+info "Forgetting snapshots"
 restic forget \
     --host=raktar \
     --tag=config \
@@ -55,4 +55,4 @@ if test $status -ne 0
     log "Unable to forget snapshots"
     exit 1
 end
-log "Snapshots forgotten successfully" only_echo
+info "Snapshots forgotten successfully"

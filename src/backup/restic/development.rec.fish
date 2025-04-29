@@ -1,23 +1,29 @@
 #! /usr/bin/fish
 
 set dst "$HOME/development"
-set script (status basename)
 
-source (status dirname)/../../log.fish
+echo "
 
-if test -z $RESTIC_REPOSITORY
-    log "RESTIC_REPOSITORY empty. Cannot proceed"
+-------------------------------------
+[[ Running $script ]]
+"(date -Iseconds)"
+-------------------------------------
+"
+
+
+if test -z "$RESTIC_REPOSITORY"
+    echo (set_color brred)"[ERROR] RESTIC_REPOSITORY empty. Cannot proceed" >&2
     exit 1
 end
 
-if test -z $RESTIC_PASSWORD_FILE or test ! -e $RESTIC_PASSWORD_FILE 
-    log "RESTIC_PASSWORD_FILE empty or does not exist. Cannot proceed"
+if test -z "$RESTIC_PASSWORD_FILE" || ! test -e "$RESTIC_PASSWORD_FILE" 
+    echo (set_color brred)"[ERROR] RESTIC_PASSWORD_FILE empty or does not exist. Cannot proceed" >&2
     exit 1
 end
 
 # Append date to name to avoid data loss
 if test -d "$dst"
-    log "Destination already exists"
+    echo "Destination already exists"
 
     set old "$dst"
     set dst "$old."(date +%s)
@@ -28,10 +34,10 @@ if test -d "$dst"
 end
 
 # Create non-existing destination
-log "Creating non existent destination" only_echo
+echo "Creating non-existing destination" only_echo
 mkdir -p "$dst"
 if test $status -ne 0
-    log "Cannot create missing destination. Exiting..."
+    echo (set_color brred)"[ERROR] Cannot create missing destination. Exiting..." >&2
     exit 1
 end
 
@@ -41,7 +47,7 @@ restic restore latest \
     --tag=development \
     --target "$dst"
 if test $status -ne 0
-    log "Could not restore snapshot"
+    echo (set_color brred)"[ERROR] Could not restore snapshot" >&2
     exit 1
 end
-log "Snapshot restoration successful"
+echo "Snapshot restoration successful"

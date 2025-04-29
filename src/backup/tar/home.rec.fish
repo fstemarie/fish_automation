@@ -6,33 +6,39 @@ set dst "$HOME/home."(date +%s)
 set arch (command ls -1dr "$src/home.*.tgz" | head -n1)
 set script (status basename)
 
-source (status dirname)/../../log.fish
+echo "
+
+-------------------------------------
+[[ Running $script ]]
+"(date -Iseconds)"
+-------------------------------------
+"
 
 # if archive does not exist, exit
 if test ! -f "$arch"
-    log "Archive not found"
+    echo (set_color brred)"[ERROR] Archive not found" >&2
     exit 1
 end
-log "Using archive: $arch" only_echo
+echo "Using archive: $arch"
 
 # if target destination does not exist, create it
 if test ! -d "$dst"
-    log "Creating non existent destination: $dst" only_echo
+    echo "Creating non-existing destination: $dst"
     mkdir -p "$dst"
     if test $status -ne 0
-        log "Cannot create missing destination. Exiting..."
+        echo (set_color brred)"[ERROR] Cannot create missing destination. Exiting..." >&2
         exit 1
     end
 end
 
 # Recover data from archive
-log "Recovering..." only_echo
+echo "Recovering..."
 tar --extract --verbose --gzip \
     --file="$arch" \
     --directory="$dst" \
     --strip=1
 if test $status -ne 0
-    log "Recovery unsuccessful"
+    echo (set_color brred)"[ERROR] Recovery unsuccessful" >&2
     exit 1
 end
-log "The recovery was successful"
+echo "The recovery was successful"

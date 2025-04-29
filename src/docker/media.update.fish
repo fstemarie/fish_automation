@@ -13,8 +13,8 @@ echo "
 " | tee -a $LOG
 
 if test ! -d "$PJDIR"
-    logger -t media.update.fish "Non existing project directory. Cannot proceed"
-    echo "media.update.fish -- Non existing project directory. Cannot proceed" | tee -a $LOG
+    logger -t media.update.fish "non-existing project directory. Cannot proceed"
+    echo "media.update.fish -- non-existing project directory. Cannot proceed" | tee -a $LOG
     exit 1
 end
 
