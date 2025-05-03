@@ -2,7 +2,7 @@
 
 set src "/l/backup/raktar/appdaemon"
 set dst "/data/containers/appdaemon"
-set arch (command ls -1dr "$src/appdaemon.*.tgz" | head -n1)
+set arch (command ls -1dr $src/appdaemon.*.tgz | head -n1)
 set script (status basename)
 
 echo "

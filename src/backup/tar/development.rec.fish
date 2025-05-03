@@ -2,7 +2,7 @@
 
 set src "/l/backup/raktar/development"
 set dst "$HOME/development"
-set arch (command ls -1dr "$src/development.*.tgz" | head -n1)
+set arch (command ls -1dr $src/development.*.tgz | head -n1)
 set script (status basename)
 
 echo "

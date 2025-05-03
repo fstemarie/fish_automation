@@ -2,7 +2,7 @@
 
 set src "/l/backup/raktar/jackett"
 set dst "/data/containers/jackett"
-set arch (command ls -1dr "$src/jackett.*.tgz" | head -n1)
+set arch (command ls -1dr $src/jackett.*.tgz | head -n1)
 set script (status basename)
 
 echo "

@@ -2,7 +2,7 @@
 
 set src "/l/backup/raktar/ombi"
 set dst "/data/containers/ombi"
-set arch (command ls -1dr "$src/ombi.*.tgz" | head -n1)
+set arch (command ls -1dr $src/ombi.*.tgz | head -n1)
 set script (status basename)
 
 echo "

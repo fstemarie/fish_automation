@@ -2,7 +2,7 @@
 
 set src "/l/backup/raktar/plex"
 set dst "/data/containers/plex"
-set arch (command ls -1dr "$src/plex.*.tgz" | head -n1)
+set arch (command ls -1dr $src/plex.*.tgz | head -n1)
 set script (status basename)
 
 echo "

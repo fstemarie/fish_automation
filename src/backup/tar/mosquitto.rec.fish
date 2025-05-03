@@ -2,7 +2,7 @@
 
 set src "/l/backup/raktar/mosquitto"
 set dst "/data/containers/mosquitto"
-set arch (command ls -1dr "$src/mosquitto.*.tgz" | head -n1)
+set arch (command ls -1dr $src/mosquitto.*.tgz | head -n1)
 set script (status basename)
 
 echo "
