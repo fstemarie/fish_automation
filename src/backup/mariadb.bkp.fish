@@ -30,7 +30,7 @@ end
 
 # if the destination folder does not exist, create it
 if test ! -d "$dst"
-    info "Creating non-existing destination"
+    log "Creating non-existing destination"
     mkdir -p "$dst"
     if test $status -ne 0
         error "Cannot create missing destination. Exiting..."
