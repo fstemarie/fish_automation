@@ -21,7 +21,7 @@ echo "
 
 # if the source folder doesn't exist, then there is nothing to backup
 if test ! -d "$src"
-    log "Source folder does not exist"
+    error "Source folder does not exist"
     exit 1
 end
 
@@ -30,7 +30,7 @@ if test ! -d "$dst"
     log "Creating non-existing destination"
     mkdir -p "$dst"
     if test $status -ne 0
-        log "Cannot create missing destination. Exiting..."
+        error "Cannot create missing destination. Exiting..."
         exit 1
     end
 end
@@ -41,7 +41,7 @@ tar --create --verbose --gzip \
     --exclude={".*", "BT_backup", "GeoDB", "ipc-socket", "lockfile", "logs", "qBittorrent-conf.json", "__pycache__"} \
     --directory="$dir" "$base"  2>&1 | tee -a $log
 if test $status -ne 0
-    log "Backup unsuccessful"
+    error "Backup unsuccessful"
     exit 1
 end
 log "The backup was successful"

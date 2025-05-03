@@ -21,27 +21,27 @@ echo "
 
 # if the source folder doesn't exist, then there is nothing to backup
 if test ! -d "$src"
-    log "Source folder does not exist"
+    error "Source folder does not exist"
     exit 1
 end
 
 # if the destination folder does not exist, create it
 if test ! -d "$dst"
-    info "Creating non-existing destination"
+    log "Creating non-existing destination"
     mkdir -p "$dst"
     if test $status -ne 0
-        log "Cannot create missing destination"
+        error "Cannot create missing destination"
         exit 1
     end
 end
 
-info "Creating archive"
+info "Creating archive $arch"
 tar --create --verbose --gzip \
     --file="$arch" \
     --exclude={'__pycache__', '.git'} \
     --directory="$dir" "$base"  2>&1 | tee -a $log
 if test $status -ne 0
-    log "Backup unsuccessful"
+    error "Backup unsuccessful"
     exit 1
 end
 log "Backup successful"
@@ -50,7 +50,7 @@ alias backups="command ls -1trd $dst/appdaemon.*.tgz"
 set nb_tot (backups | count)
 set nb_diff (math $nb_tot - $nb_max)
 if test $nb_diff -gt 0
-    echo "$script -- Removing older archives" | tee -a $log
+    info "Removing older archives" | tee -a $log
     backups | head -n$nb_diff | tee -a $log
     backups | head -n$nb_diff | xargs rm -f > /dev/null
 end

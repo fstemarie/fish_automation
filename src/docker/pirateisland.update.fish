@@ -1,38 +1,36 @@
 #! /usr/bin/fish
 
-set PJDIR "/home/francois/development/containers/pirateisland"
-set LOG "/var/log/automation/pirateisland.update.log"
+set pjdir "/home/francois/development/containers/pirateisland"
+set log "/var/log/automation/pirateisland.update.log"
+set script (status basename)
 
-logger -t pirateisland.update.fish "[[ Running pirateisland.update.fish ]]"
+source (status dirname)/../log.fish
+
 echo "
 
 -------------------------------------
 [[ Running pirateisland.update.fish ]]
  "(date -Iseconds)"
 -------------------------------------
-" | tee -a $LOG
+" | tee -a $log
 
-if test ! -d "$PJDIR"
-    logger -t pirateisland.update.fish "non-existing project directory. Cannot proceed"
-    echo "pirateisland.update.fish -- non-existing project directory. Cannot proceed" | tee -a $LOG
+if test ! -d "$pjdir"
+    error "non-existing project directory. Cannot proceed"
     exit 1
 end
 
-echo "pirateisland.update.fish -- Updating containers" | tee -a $LOG
-pushd "$PJDIR"
+info "Updating containers"
+pushd "$pjdir"
 docker compose pull
 if test $status -ne 0
-    logger -t pirateisland.update.fish "There was an error during the update"
-    echo "pirateisland.update.fish -- There was an error during the update" | tee -a $LOG
+    error "There was an error during the update"
     exit 1
 end
 
-echo "pirateisland.update.fish -- Restarting containers" | tee -a $LOG
+info "Restarting containers"
 docker compose up -d
 if test $status -ne 0
-    logger -t pirateisland.update.fish "There was an error while restarting containers"
-    echo "pirateisland.update.fish -- There was an error while restarting containers" | tee -a $LOG
+    error "There was an error while restarting containers"
     exit 1
 end
 popd
-echo "[[ End of Script ]]" | tee -a $LOG

@@ -1,38 +1,36 @@
 #! /usr/bin/fish
 
-set PJDIR "/home/francois/development/containers/media"
-set LOG "/var/log/automation/media.update.log"
+set pjdir "/home/francois/development/containers/media"
+set log "/var/log/automation/media.update.log"
+set script (status basename)
 
-logger -t media.update.fish "[[ Running media.update.fish ]]"
+source (status dirname)/../log.fish
+
 echo "
 
 -------------------------------------
 [[ Running media.update.fish ]]
  "(date -Iseconds)"
 -------------------------------------
-" | tee -a $LOG
+" | tee -a $log
 
-if test ! -d "$PJDIR"
-    logger -t media.update.fish "non-existing project directory. Cannot proceed"
-    echo "media.update.fish -- non-existing project directory. Cannot proceed" | tee -a $LOG
+if test ! -d "$pjdir"
+    error "non-existing project directory. Cannot proceed"
     exit 1
 end
 
-echo "media.update.fish -- Updating containers" | tee -a $LOG
-pushd "$PJDIR"
+info "Updating containers"
+pushd "$pjdir"
 docker compose pull
 if test $status -ne 0
-    logger -t media.update.fish "There was an error during the update"
-    echo "media.update.fish -- There was an error during the update" | tee -a $LOG
+    error "There was an error during the update"
     exit 1
 end
 
-echo "media.update.fish -- Restarting containers" | tee -a $LOG
+info "Restarting containers"
 docker compose up -d
 if test $status -ne 0
-    logger -t media.update.fish "There was an error while restarting containers"
-    echo "media.update.fish -- There was an error while restarting containers" | tee -a $LOG
+    error "There was an error while restarting containers"
     exit 1
 end
 popd
-echo "[[ End of Script ]]" | tee -a $LOG

@@ -1,38 +1,36 @@
 #! /usr/bin/fish
 
-set PJDIR "/home/francois/development/containers/mariadb"
-set LOG "/var/log/automation/mariadb.update.log"
+set pjdir "/home/francois/development/containers/mariadb"
+set log "/var/log/automation/mariadb.update.log"
+set script (status basename)
 
-logger -t mariadb.update.fish "[[ Running mariadb.update.fish ]]"
+source (status dirname)/../log.fish
+
 echo "
 
 -------------------------------------
 [[ Running mariadb.update.fish ]]
  "(date -Iseconds)"
 -------------------------------------
-" | tee -a $LOG
+" | tee -a $log
 
-if test ! -d "$PJDIR"
-    logger -t mariadb.update.fish "non-existing project directory. Cannot proceed"
-    echo "mariadb.update.fish -- non-existing project directory. Cannot proceed" | tee -a $LOG
+if test ! -d "$pjdir"
+    error "non-existing project directory. Cannot proceed"
     exit 1
 end
 
-echo "mariadb.update.fish -- Updating containers" | tee -a $LOG
-pushd "$PJDIR"
+info "Updating containers"
+pushd "$pjdir"
 docker compose pull
 if test $status -ne 0
-    logger -t mariadb.update.fish "There was an error during the update"
-    echo "mariadb.update.fish -- There was an error during the update" | tee -a $LOG
+    error "There was an error during the update"
     exit 1
 end
 
-echo "mariadb.update.fish -- Restarting containers" | tee -a $LOG
+info "Restarting containers"
 docker compose up -d
 if test $status -ne 0
-    logger -t mariadb.update.fish "There was an error while restarting containers"
-    echo "mariadb.update.fish -- There was an error while restarting containers" | tee -a $LOG
+    error "There was an error while restarting containers"
     exit 1
 end
 popd
-echo "[[ End of Script ]]" | tee -a $LOG

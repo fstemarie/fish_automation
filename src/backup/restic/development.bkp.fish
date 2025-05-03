@@ -15,18 +15,18 @@ echo "
 " | tee -a $log
 
 if test -z "$RESTIC_REPOSITORY"
-    log "RESTIC_REPOSITORY empty. Cannot proceed"
+    error "RESTIC_REPOSITORY empty. Cannot proceed"
     exit 1
 end
 
 if test -z "$RESTIC_PASSWORD_FILE" || ! test -e "$RESTIC_PASSWORD_FILE" 
-    log "RESTIC_PASSWORD_FILE empty or does not exist. Cannot proceed"
+    error "RESTIC_PASSWORD_FILE empty or does not exist. Cannot proceed"
     exit 1
 end
 
 # if the source folder doesn't exist, then there is nothing to backup
 if test ! -d "$src"
-    log "Source folder does not exist"
+    error "Source folder does not exist. Cannot proceed"
     exit 1
 end
 info "Source folder: $src"
@@ -40,7 +40,7 @@ restic backup \
     --exclude='node_modules' \
     .  2>&1 | tee -a $log
 if test $status -ne 0
-    log "There was an error during the snapshot"
+    error "There was an error during the snapshot"
     exit 1
 end
 popd
@@ -54,7 +54,7 @@ restic forget \
     --keep-weekly 4 \
     --keep-monthly=6  2>&1 | tee -a $log
 if test $status -ne 0
-    log "Unable to forget snapshots"
+    error "Unable to forget snapshots"
     exit 1
 end
 info "Snapshots forgotten successfully"

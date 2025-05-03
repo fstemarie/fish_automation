@@ -1,38 +1,36 @@
 #! /usr/bin/fish
 
-set PJDIR "/home/francois/development/containers/radicale"
-set LOG "/var/log/automation/radicale.update.log"
+set pjdir "/home/francois/development/containers/radicale"
+set log "/var/log/automation/radicale.update.log"
+set script (status basename)
 
-logger -t radicale.update.fish "[[ Running radicale.update.fish ]]"
+source (status dirname)/../log.fish
+
 echo "
 
 -------------------------------------
 [[ Running radicale.update.fish ]]
  "(date -Iseconds)"
 -------------------------------------
-" | tee -a $LOG
+" | tee -a $log
 
-if test ! -d "$PJDIR"
-    logger -t radicale.update.fish "non-existing project directory. Cannot proceed"
-    echo "radicale.update.fish -- non-existing project directory. Cannot proceed" | tee -a $LOG
+if test ! -d "$pjdir"
+    error "non-existing project directory. Cannot proceed"
     exit 1
 end
 
-echo "radicale.update.fish -- Updating containers" | tee -a $LOG
-pushd "$PJDIR"
+info "Updating containers"
+pushd "$pjdir"
 docker compose pull
 if test $status -ne 0
-    logger -t radicale.update.fish "There was an error during the update"
-    echo "radicale.update.fish -- There was an error during the update" | tee -a $LOG
+    error "There was an error during the update"
     exit 1
 end
 
-echo "radicale.update.fish -- Restarting containers" | tee -a $LOG
+info "Restarting containers"
 docker compose up -d
 if test $status -ne 0
-    logger -t radicale.update.fish "There was an error while restarting containers"
-    echo "radicale.update.fish -- There was an error while restarting containers" | tee -a $LOG
+    error "There was an error while restarting containers"
     exit 1
 end
 popd
-echo "[[ End of Script ]]" | tee -a $LOG
