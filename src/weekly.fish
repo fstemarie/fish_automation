@@ -7,8 +7,8 @@ set scripts \
     "docker/iot.update.fish" \
     "docker/mariadb.update.fish" \
     "docker/media.update.fish" \
-    "docker/pirateisland.update.fish" \
-    "docker/radicale.update.fish"
+    "docker/pirateisland.update.fish"
+    # "docker/radicale.update.fish"
 
 restic unlock
 for script in $scripts
