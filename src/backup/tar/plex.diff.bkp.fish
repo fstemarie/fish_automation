@@ -1,10 +1,10 @@
 #! /usr/bin/fish
 
-set src "/data/containers/ombi"
-set dst "/l/backup/raktar/ombi"
-set arch "$dst/ombi."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
-set log "/var/log/automation/ombi.tar.log"
-set nb_max 5
+set src "/data/containers/plex"
+set dst "/l/backup/raktar/plex"
+set arch "$dst/plex.diff.tar.zst"
+set snar "$dst/plex.diff.snar"
+set log "/var/log/automation/plex.tar.log"
 set dir (dirname "$src")
 set base (basename "$src")
 set script (status basename)
@@ -48,31 +48,28 @@ if contains "$container" "$base"
     docker wait "$container" > /dev/null
 end
 
+info "Copying snapshot file"
+cp -f "$dst/plex.full.snar" "$snar" 2>&1 | tee -a $log
+
+info "Changing permission on Preferences.xml"
+sudo chmod a+r "$src/Library/Application Support/Plex Media Server/Preferences.xml" 2>&1 > /dev/null
+
 info "Creating archive"
-tar --create --verbose --gzip \
+tar --create --zstd \
+    --listed-incremental="$snar" \
+    --exclude={'Cache', 'Logs', '.LocalAdminToken', 'Setup Plex.html'} \
     --file="$arch" \
-    --exclude={'logs', '.aspnet', '.dotnet'} \
-    --directory="$dir" "$base"  2>&1 | tee -a $log
+    --directory="$dir" "$base" 2>&1 | tee -a $log
 if test $status -ne 0
     error "Backup unsuccessful"
     exit 1
 end
 log "The backup was successful"
 
-# Restart the container
 if set -q restart
     info "Restarting container $container"
     docker container start "$container" > /dev/null
     if test $status -ne 0
         error "Unable to start container $container"
     end
-end
-
-alias backups="command ls -1trd $dst/ombi.*.tgz"
-set nb_tot (backups | count)
-set nb_diff (math $nb_tot - $nb_max)
-if test $nb_diff -gt 0
-    info "Removing older archives"
-    backups | head -n$nb_diff | tee -a $log
-    backups | head -n$nb_diff | xargs rm -f > /dev/null
 end

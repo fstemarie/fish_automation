@@ -35,6 +35,19 @@ if test ! -d "$dst"
     end
 end
 
+# stop the container
+set container (docker container ps --filter="name=$base" --format='{{.Names}}')
+if contains "$container" "$base"
+    set -g restart
+    info "Stopping container $container"
+    docker container stop "$container" > /dev/null
+    if test $status -ne 0
+        error "Unable to stop container $container"
+        exit 1
+    end
+    docker wait "$container" > /dev/null
+end
+
 info "Creating archive"
 tar --create --verbose --gzip \
     --file="$arch" \
@@ -45,6 +58,15 @@ if test $status -ne 0
     exit 1
 end
 log "The backup was successful"
+
+# Restart the container
+if set -q restart
+    info "Restarting container $container"
+    docker container start "$container" > /dev/null
+    if test $status -ne 0
+        error "Unable to start container $container"
+    end
+end
 
 alias backups="command ls -1trd $dst/mosquitto.*.tgz"
 set nb_tot (backups | count)

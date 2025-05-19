@@ -1,6 +1,7 @@
 #! /usr/bin/fish
 
 set src "/data/containers/radicale"
+set base (basename "$src")
 set log "/var/log/automation/radicale.restic.log"
 set script (status basename)
 
@@ -31,6 +32,19 @@ if test ! -d "$src"
 end
 info "Source folder: $src"
 
+# stop the container
+set container (docker container ps --filter="name=$base" --format='{{.Names}}')
+if contains "$container" "$base"
+    set -g restart
+    info "Stopping container $container"
+    docker container stop "$container" > /dev/null
+    if test $status -ne 0
+        error "Unable to stop container $container"
+        exit 1
+    end
+    docker wait "$container" > /dev/null
+end
+
 info "Creating restic snapshot"
 pushd "$src"
 restic backup \
@@ -43,6 +57,15 @@ if test $status -ne 0
 end
 popd
 log "Snapshot created successfully"
+
+# Restart the container
+if set -q restart
+    info "Restarting container $container"
+    docker container start "$container" > /dev/null
+    if test $status -ne 0
+        error "Unable to start container $container"
+    end
+end
 
 info "Forgetting snapshots"
 restic forget \
