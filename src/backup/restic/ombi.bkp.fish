@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set src "/data/containers/ombi"
+set src "/srv/ombi"
 set base (basename "$src")
 set log "/var/log/automation/ombi.restic.log"
 set script (status basename)

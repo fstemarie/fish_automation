@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set src "/data/containers/nodered"
+set src "/srv/nodered"
 set base (basename "$src")
 set log "/var/log/automation/nodered.restic.log"
 set script (status basename)

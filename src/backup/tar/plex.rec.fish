@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 
 set src "/l/backup/sklad/plex"
-set dst "/data/containers/plex"
+set dst "/srv/plex"
 set arch (command ls -1dr $src/plex.*.tgz | head -n1)
 set script (status basename)
 

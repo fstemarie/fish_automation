@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set dst "/data/containers/radicale"
+set dst "/srv/radicale"
 
 echo "
 

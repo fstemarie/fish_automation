@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set src "/data/containers/appdaemon"
+set src "/srv/appdaemon"
 set dst "/l/backup/sklad/appdaemon"
 set arch "$dst/appdaemon."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 set log "/var/log/automation/appdaemon.tar.log"

@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 
 set src "/l/backup/sklad/mosquitto"
-set dst "/data/containers/mosquitto"
+set dst "/srv/mosquitto"
 set arch (command ls -1dr $src/mosquitto.*.tgz | head -n1)
 set script (status basename)
 

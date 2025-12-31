@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set src "/data/containers/jellyfin"
+set src "/srv/jellyfin"
 set dst "/l/backup/sklad/jellyfin"
 set arch "$dst/jellyfin."(date +%Y%m%dT%H%M%S)".tar.zst"
 set snar "$dst/jellyfin.full.snar"

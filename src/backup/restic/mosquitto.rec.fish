@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set dst "/data/containers/mosquitto"
+set dst "/srv/mosquitto"
 
 echo "
 

@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set dst "/data/containers/nodered"
+set dst "/srv/nodered"
 
 echo "
 

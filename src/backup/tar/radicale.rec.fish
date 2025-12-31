@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 
 set src "/l/backup/sklad/radicale"
-set dst "/data/containers/radicale"
+set dst "/srv/radicale"
 set arch (command ls -1dr $src/radicale.*.tgz | head -n1)
 set script (status basename)
 

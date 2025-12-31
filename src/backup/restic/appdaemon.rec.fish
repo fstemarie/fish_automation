@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set dst "/data/containers/appdaemon"
+set dst "/srv/appdaemon"
 
 echo "
 

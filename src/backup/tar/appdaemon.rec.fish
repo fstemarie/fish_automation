@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 
 set src "/l/backup/sklad/appdaemon"
-set dst "/data/containers/appdaemon"
+set dst "/srv/appdaemon"
 set arch (command ls -1dr $src/appdaemon.*.tgz | head -n1)
 set script (status basename)
 

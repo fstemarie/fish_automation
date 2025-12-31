@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set src "/data/containers/mosquitto"
+set src "/srv/mosquitto"
 set base (basename "$src")
 set log "/var/log/automation/mosquitto.restic.log"
 set script (status basename)

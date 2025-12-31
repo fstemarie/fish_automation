@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set src "/data/containers/ombi"
+set src "/srv/ombi"
 set dst "/l/backup/sklad/ombi"
 set arch "$dst/ombi."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 set log "/var/log/automation/ombi.tar.log"

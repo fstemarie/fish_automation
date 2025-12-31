@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set dst "/data/containers/ombi"
+set dst "/srv/ombi"
 
 echo "
 

@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set src "/data/containers/plex"
+set src "/srv/plex"
 set dst "/l/backup/sklad/plex"
 set arch "$dst/plex.diff.tar.zst"
 set snar "$dst/plex.diff.snar"

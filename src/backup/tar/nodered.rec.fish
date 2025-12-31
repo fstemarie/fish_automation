@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 
 set src "/l/backup/sklad/nodered"
-set dst "/data/containers/nodered"
+set dst "/srv/nodered"
 set arch (command ls -1dr $src/nodered.*.tgz | head -n1)
 set script (status basename)
 

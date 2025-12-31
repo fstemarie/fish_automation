@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 
 set src "/l/backup/sklad/jellyfin"
-set dst "/data/containers/jellyfin"
+set dst "/srv/jellyfin"
 set arch (command ls -1dr $src/jellyfin.*.tgz | head -n1)
 set script (status basename)
 

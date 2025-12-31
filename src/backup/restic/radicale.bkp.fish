@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set src "/data/containers/radicale"
+set src "/srv/radicale"
 set base (basename "$src")
 set log "/var/log/automation/radicale.restic.log"
 set script (status basename)

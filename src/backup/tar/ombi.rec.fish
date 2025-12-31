@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 
 set src "/l/backup/sklad/ombi"
-set dst "/data/containers/ombi"
+set dst "/srv/ombi"
 set arch (command ls -1dr $src/ombi.*.tgz | head -n1)
 set script (status basename)
 

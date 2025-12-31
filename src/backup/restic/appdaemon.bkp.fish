@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set src "/data/containers/appdaemon"
+set src "/srv/appdaemon"
 set log "/var/log/automation/appdaemon.restic.log"
 set base (basename "$src")
 set script (status basename)

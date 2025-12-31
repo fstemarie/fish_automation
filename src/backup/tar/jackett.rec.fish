@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 
 set src "/l/backup/sklad/jackett"
-set dst "/data/containers/jackett"
+set dst "/srv/jackett"
 set arch (command ls -1dr $src/jackett.*.tgz | head -n1)
 set script (status basename)
 
