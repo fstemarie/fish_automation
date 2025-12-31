@@ -34,7 +34,6 @@ info "Source folder: $src"
 info "Creating restic snapshot"
 pushd "$src"
 restic backup \
-    --host=raktar \
     --tag=development \
     --exclude='.venv' \
     --exclude='node_modules' \
@@ -48,7 +47,6 @@ log "Snapshot created successfully"
 
 info "Forgetting snapshots"
 restic forget \
-    --host=raktar \
     --tag=development \
     --keep-daily 1 \
     --keep-weekly 4 \

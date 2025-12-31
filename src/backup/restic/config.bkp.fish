@@ -35,7 +35,6 @@ info "Source folder: $src"
 info "Creating restic snapshot"
 pushd "$src"
 restic backup \
-    --host=raktar \
     --tag=config \
     .  2>&1 | tee -a $log
 if test $status -ne 0
@@ -47,7 +46,6 @@ log "Snapshot created successfully"
 
 info "Forgetting snapshots"
 restic forget \
-    --host=raktar \
     --tag=config \
     --keep-last 1  2>&1 | tee -a $log
 if test $status -ne 0

@@ -35,7 +35,6 @@ info "Source folder: $src"
 info "Creating restic snapshot"
 pushd "$src"
 restic backup \
-    --host=raktar \
     --tag=home \
     --exclude='.cache' \
     --exclude='.vscode*' \
@@ -51,7 +50,6 @@ log "Snapshot created successfully"
 
 info "Forgetting snapshots"
 restic forget \
-    --host=raktar \
     --tag=home \
     --keep-daily=1 \
     --keep-weekly=4 \

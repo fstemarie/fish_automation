@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 
 set src "/data/containers/jackett"
-set dst "/l/backup/raktar/jackett"
+set dst "/l/backup/sklad/jackett"
 set arch "$dst/jackett."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 set log "/var/log/automation/jackett.tar.log"
 set nb_max 5

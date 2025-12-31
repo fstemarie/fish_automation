@@ -42,7 +42,6 @@ end
 
 # Recover data from archive
 restic restore latest \
-    --host=raktar \
     --tag=radicale \
     --target "$dst"
 if test $status -ne 0

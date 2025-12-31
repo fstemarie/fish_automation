@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 
 set src "$HOME"
-set dst "/l/backup/raktar/home"
+set dst "/l/backup/sklad/home"
 set arch "$dst/home."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 set log "/var/log/automation/home.tar.log"
 set nb_max 5

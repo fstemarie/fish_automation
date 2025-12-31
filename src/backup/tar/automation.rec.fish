@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set src "/l/backup/raktar/automation"
+set src "/l/backup/sklad/automation"
 set dst "/data/automation"
 set arch (command ls -1dr $src/automation.*.tgz | head -n1)
 set script (status basename)

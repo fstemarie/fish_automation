@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set src "/l/backup/raktar/qbittorrent"
+set src "/l/backup/sklad/qbittorrent"
 set dst "/data/containers/qbittorrent"
 set arch (command ls -1dr $src/qbittorrent.*.tgz | head -n1)
 set script (status basename)

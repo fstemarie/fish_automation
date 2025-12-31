@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 
 set src "/data/containers/nodered"
-set dst "/l/backup/raktar/nodered"
+set dst "/l/backup/sklad/nodered"
 set arch "$dst/nodered."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 set log "/var/log/automation/nodered.tar.log"
 set nb_max 5

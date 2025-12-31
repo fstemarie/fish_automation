@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set src "/l/backup/raktar/home"
+set src "/l/backup/sklad/home"
 # Append date to destination name to avoid data loss
 set dst "$HOME/home."(date +%s)
 set arch (command ls -1dr $src/home.*.tgz | head -n1)

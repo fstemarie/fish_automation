@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 
 set src "/data/containers/plex"
-set dst "/l/backup/raktar/plex"
+set dst "/l/backup/sklad/plex"
 set arch "$dst/plex."(date +%Y%m%dT%H%M%S)".tar.zst"
 set snar "$dst/plex.full.snar"
 set log "/var/log/automation/plex.tar.log"

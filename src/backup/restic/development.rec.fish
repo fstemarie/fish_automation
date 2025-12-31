@@ -4,12 +4,12 @@ set dst "$HOME/development"
 
 echo "
 
+
 -------------------------------------
 [[ Running $script ]]
 "(date -Iseconds)"
 -------------------------------------
 "
-
 
 if test -z "$RESTIC_REPOSITORY"
     echo (set_color brred)"[ERROR] RESTIC_REPOSITORY empty. Cannot proceed" >&2
@@ -43,7 +43,6 @@ end
 
 # Recover data from archive
 restic restore latest \
-    --host=raktar \
     --tag=development \
     --target "$dst"
 if test $status -ne 0

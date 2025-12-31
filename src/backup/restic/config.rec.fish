@@ -43,7 +43,6 @@ end
 # Recover data from archive
 echo "Recovering..."
 restic restore latest \
-    --host=raktar \
     --tag=config \
     --target "$dst"
 if test $status -ne 0

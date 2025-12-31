@@ -48,7 +48,6 @@ end
 info "Creating restic snapshot"
 pushd "$src"
 restic backup \
-    --host=raktar \
     --tag=nodered \
     --exclude='node_modules' --exclude='.git' --exclude='.npm' \
     .  2>&1 | tee -a $log
@@ -70,7 +69,6 @@ end
 
 info "Forgetting snapshots"
 restic forget \
-    --host=raktar \
     --tag=nodered \
     --keep-last=3 2>&1 | tee -a $log
 if test $status -ne 0

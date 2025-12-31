@@ -48,7 +48,6 @@ end
 info "Creating restic snapshot"
 pushd "$src"
 restic backup \
-    --host=raktar \
     --tag=radicale \
     .  2>&1 | tee -a $log
 if test $status -ne 0
@@ -69,7 +68,6 @@ end
 
 info "Forgetting snapshots"
 restic forget \
-    --host=raktar \
     --tag=radicale \
     --keep-last=3 2>&1 | tee -a $log
 if test $status -ne 0

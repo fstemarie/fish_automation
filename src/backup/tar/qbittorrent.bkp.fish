@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 
 set src "/data/containers/qbittorrent"
-set dst "/l/backup/raktar/qbittorrent"
+set dst "/l/backup/sklad/qbittorrent"
 set arch "$dst/qbittorrent."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 set log "/var/log/automation/qbittorrent.tar.log"
 set nb_max 5

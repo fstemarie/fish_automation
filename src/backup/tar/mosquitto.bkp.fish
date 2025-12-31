@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 
 set src "/data/containers/mosquitto"
-set dst "/l/backup/raktar/mosquitto"
+set dst "/l/backup/sklad/mosquitto"
 set arch "$dst/mosquitto."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 set log "/var/log/automation/mosquitto.tar.log"
 set nb_max 5

@@ -1,6 +1,6 @@
 #! /usr/bin/fish
 
-set src "/l/backup/raktar/development"
+set src "/l/backup/sklad/development"
 set dst "$HOME/development"
 set arch (command ls -1dr $src/development.*.tgz | head -n1)
 set script (status basename)

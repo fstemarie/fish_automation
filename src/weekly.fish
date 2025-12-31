@@ -22,7 +22,7 @@ restic prune
 
 set notifications (string join '\n' $notifications)
 echo -e $notifications | curl -T- \
-    -H "title: 💾 raktar.home weekly backup report" \
+    -H "title: 💾 sklad.home weekly backup report" \
     -H "priority: low" \
     -H "markdown: yes" \
     https://ntfy.sh/automation_ewNXGlvorS6g8NUr

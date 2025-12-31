@@ -1,7 +1,7 @@
 #! /usr/bin/fish
 
 set src "/data/containers/radicale"
-set dst "/l/backup/raktar/radicale"
+set dst "/l/backup/sklad/radicale"
 set arch "$dst/radicale."(date +%Y%m%dT%H%M%S | tr -d :-)".tgz"
 set log "/var/log/automation/radicale.tar.log"
 set nb_max 5
