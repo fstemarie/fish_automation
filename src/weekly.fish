@@ -5,10 +5,9 @@ set scripts \
     "backup/restic/automation.bkp.fish" \
     "backup/restic/config.bkp.fish" \
     "docker/iot.update.fish" \
-    "docker/mariadb.update.fish" \
     "docker/media.update.fish" \
+    "docker/images.purge.fish" \
     "docker/pirateisland.update.fish"
-    # "docker/radicale.update.fish"
 
 restic unlock
 for script in $scripts
