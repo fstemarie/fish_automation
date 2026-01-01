@@ -45,7 +45,7 @@ echo "Recovering..."
 tar --extract --verbose --gzip \
     --file="$arch" \
     --directory="$dst" \
-    --strip=1
+    --strip=1 2>&1 | tee -a $log
 if test $status -ne 0
     echo (set_color brred)"[ERROR] Recovery unsuccessful" >&2
     exit 1
