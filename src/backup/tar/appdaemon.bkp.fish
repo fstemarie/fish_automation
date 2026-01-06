@@ -38,7 +38,7 @@ end
 info "Creating archive $arch"
 tar --create --verbose --gzip \
     --file="$arch" \
-    --exclude={'__pycache__', '.git'} \
+    --exclude={'__pycache__', '.git', '.local', '.venv', '.cache'} \
     --directory="$dir" "$base"  2>&1 | tee -a $log
 if test $status -ne 0
     error "Backup unsuccessful"
